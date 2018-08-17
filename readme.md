@@ -7,13 +7,13 @@ It use google maps api, to get distance and time for some track.
 ## What a this? (screenshots)
 <img src="screenshot.png">
 
-![app screenshot](screenshot1.png)
+![app screenshot1](screenshot1.png)
 
-![app screenshot](screenshot.png)
+![app screenshot2](screenshot.png)
 
-![app screenshot](screenshot2.png)
+![app screenshot3](screenshot2.png)
 
-![app screenshot](screenshot3.png)
+![app screenshot4](screenshot3.png)
 
 # Installation
 
