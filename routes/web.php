@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::resource('tracks', 'TrackController')->except('show');
+
+Route::post('track', 'TrackController@show')->name('track');

@@ -47,15 +47,42 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        $track = new Track;
-        $track->code = $request->code;
-        $track->from = $request->from;
-        $track->to = $request->to;
-        $track->start_time = $request->start_time;
-        $track->end_time = $request->end_time;
-        $track->save();
+        Track::create($request->all());
+
 
         return redirect()->route('tracks.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $track = Track::where('code', $request->code)->first();
+
+        if (empty($track)) {
+            abort(404);
+        }
+
+        $to = !empty($track->current_location) ? $track->current_location : $track->to;
+        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from . "&destination=" . $to);
+
+        $api = json_decode($url);
+
+        $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
+        $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
+
+        $end['lat'] = $api->routes[0]->legs[0]->end_location->lat;
+        $end['lng'] = $api->routes[0]->legs[0]->end_location->lng;
+
+        $distance = $api->routes[0]->legs[0]->distance->text;
+        $duration['text'] = $api->routes[0]->legs[0]->duration->text;
+        $duration['value'] = $api->routes[0]->legs[0]->duration->value;
+
+        return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'distance' => $distance, 'duration' => $duration]);
     }
 
 
