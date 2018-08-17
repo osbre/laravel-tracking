@@ -67,8 +67,8 @@ class TrackController extends Controller
             abort(404);
         }
 
-        $to = !empty($track->current_location) ? $track->current_location : $track->to;
-        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from . "&destination=" . $to);
+        $from = !empty($track->current_location) ? $track->current_location : $track->from;
+        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to);
 
         $api = json_decode($url);
 
