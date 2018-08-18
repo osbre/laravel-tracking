@@ -2,6 +2,14 @@
 
 @section('title', 'Edit track')
 
+@section('head')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.css"
+          integrity="sha256-TV6wP5ef/UY4bNFdA1h2i8ASc9HHcnl8ufwk94/HP4M=" crossorigin="anonymous"/>
+    <script src="{{ asset('css/picker.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.js"
+            integrity="sha256-xYW0mVKSgKFu1yJ15BrY8JesOJIMcGv9tLU6PZJ1W7Q=" crossorigin="anonymous"></script>
+@endsection
+
 @section('content')
     <div class="container-fluid h-100">
         <div class="row justify-content-center align-items-center h-100">
@@ -89,7 +97,7 @@
                     {{-- delivered --}}
                     <div class="form-group">
                         <input type="text" name="delivered"
-                               class="form-control form-control-lg js-date-picker"
+                               class="form-control form-control-lg"
                                placeholder="delivered" value="{{ $track->delivered }}">
                     </div>
                     <h4>Load summary</h4>
@@ -113,12 +121,35 @@
             </div>
         </div>
     </div>
+
     <script>
-        new Picker(document.getElementById('start_time'), {
-            format: 'YYYY:MM:DD HH:mm:00',
+        flatpickr(".js-date-picker", {
+            enableTime: true,
+            dateFormat: "m-d-Y H:i",
         });
-        new Picker(document.getElementById('end_time'), {
-            format: 'YYYY:MM:DD HH:mm:00',
-        });
+
+        function initAutocomplete() {
+            new google.maps.places.Autocomplete(
+                (document.getElementById('from')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('to')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('at_origin')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('freight_loaded')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('current_location')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('at_distination')),
+                {types: ['geocode']});
+        }
+
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initAutocomplete"
+            async defer></script>
 @endsection
