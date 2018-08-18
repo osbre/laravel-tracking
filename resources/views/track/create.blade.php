@@ -20,11 +20,13 @@
                     </div>
                     {{-- from --}}
                     <div class="form-group">
-                        <input type="text" name="from" class="form-control form-control-lg" placeholder="from" required>
+                        <input type="text" name="from" class="form-control form-control-lg" placeholder="from" required
+                               id="from">
                     </div>
                     {{-- to --}}
-                    <div class="form-group">
-                        <input type="text" name="to" class="form-control form-control-lg" placeholder="to" required>
+                    <div class="form-group" id="locationField">
+                        <input type="text" name="to" class="form-control form-control-lg" placeholder="to" required
+                               id="to">
                     </div>
                     {{-- dims --}}
                     <div class="form-group">
@@ -43,7 +45,7 @@
                     <div class="form-group">
                         <input type="text" name="at_origin" id="at_origin"
                                class="form-control form-control-lg"
-                               placeholder="at_origin">
+                               placeholder="at_origin" id="at_origin">
                     </div>
                     {{-- at_origin_date --}}
                     <div class="form-group">
@@ -55,7 +57,7 @@
                     <div class="form-group">
                         <input type="text" name="freight_loaded"
                                class="form-control form-control-lg"
-                               placeholder="freight_loaded">
+                               placeholder="freight_loaded" id="freight_loaded">
                     </div>
                     {{-- freight_loaded_date --}}
                     <div class="form-group">
@@ -67,7 +69,7 @@
                     <div class="form-group">
                         <input type="text" name="current_location" id="current_location"
                                class="form-control form-control-lg"
-                               placeholder="current_location">
+                               placeholder="current_location" id="current_location">
                     </div>
                     {{-- current_location_date --}}
                     <div class="form-group">
@@ -79,7 +81,7 @@
                     <div class="form-group">
                         <input type="text" name="at_distination"
                                class="form-control form-control-lg"
-                               placeholder="at_distination">
+                               placeholder="at_distination" id="at_distination">
                     </div>
                     {{-- at_distination_date --}}
                     <div class="form-group">
@@ -115,11 +117,37 @@
         </div>
     </div>
     <script>
-        new Picker(document.getElementById('start_time'), {
+        /*new Picker(document.getElementById('start_time'), {
             format: 'YYYY:MM:DD HH:mm:00',
         });
         new Picker(document.getElementById('end_time'), {
             format: 'YYYY:MM:DD HH:mm:00',
-        });
+        });*/
     </script>
+
+    <script>
+        function initAutocomplete() {
+            new google.maps.places.Autocomplete(
+                (document.getElementById('from')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('to')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('at_origin')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('freight_loaded')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('current_location')),
+                {types: ['geocode']});
+            new google.maps.places.Autocomplete(
+                (document.getElementById('at_distination')),
+                {types: ['geocode']});
+        }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initAutocomplete"
+            async defer></script>
 @endsection

@@ -79,7 +79,7 @@ class TrackController extends Controller
             $from = $track->from;
         }
 
-        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to."&key=".env('GOOGLE_MAPS_API_KEY'));
+        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY'));
 
         $api = json_decode($url);
 
