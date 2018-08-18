@@ -94,7 +94,7 @@
                     {{-- delivered --}}
                     <div class="form-group">
                         <input type="text" name="delivered"
-                               class="form-control form-control-lg"
+                               class="form-control form-control-lg js-date-picker"
                                placeholder="delivered">
                     </div>
                     <h4>Load summary</h4>
@@ -118,6 +118,14 @@
             </div>
         </div>
     </div>
+    <script>
+        /*new Picker(document.getElementById('start_time'), {
+            format: 'YYYY:MM:DD HH:mm:00',
+        });
+        new Picker(document.getElementById('end_time'), {
+            format: 'YYYY:MM:DD HH:mm:00',
+        });*/
+    </script>
 
     <script>
         flatpickr(".js-date-picker", {
