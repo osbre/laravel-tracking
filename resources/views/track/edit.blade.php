@@ -5,7 +5,6 @@
 @section('head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.css"
           integrity="sha256-TV6wP5ef/UY4bNFdA1h2i8ASc9HHcnl8ufwk94/HP4M=" crossorigin="anonymous"/>
-    <script src="{{ asset('css/picker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.js"
             integrity="sha256-xYW0mVKSgKFu1yJ15BrY8JesOJIMcGv9tLU6PZJ1W7Q=" crossorigin="anonymous"></script>
 @endsection
@@ -26,12 +25,12 @@
                     {{-- from --}}
                     <div class="form-group">
                         <input type="text" name="from" class="form-control form-control-lg" placeholder="from" required
-                               value="{{ $track->from }}">
+                               value="{{ $track->from }}" id="from">
                     </div>
                     {{-- to --}}
                     <div class="form-group">
                         <input type="text" name="to" class="form-control form-control-lg" placeholder="to" required
-                               value="{{ $track->to }}">
+                               value="{{ $track->to }}" id="to">
                     </div>
                     {{-- dims --}}
                     <div class="form-group">
@@ -56,7 +55,7 @@
                     <div class="form-group">
                         <input type="text" name="at_origin_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_origin_date" value="{{ $track->at_origin_date }}">
+                               placeholder="at_origin_date" value="{{ $track->at_origin_date }}" id="at_origin_date">
                     </div>
                     {{-- freight_loaded --}}
                     <div class="form-group">
@@ -68,7 +67,7 @@
                     <div class="form-group">
                         <input type="text" name="freight_loaded_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="freight_loaded_date" value="{{ $track->freight_loaded_date }}">
+                               placeholder="freight_loaded_date" value="{{ $track->freight_loaded_date }}" id="freight_loaded_date">
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
@@ -80,7 +79,7 @@
                     <div class="form-group">
                         <input type="text" name="current_location_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="current_location_date" value="{{ $track->current_location_date }}">
+                               placeholder="current_location_date" value="{{ $track->current_location_date }}" id="current_location_date">
                     </div>
                     {{-- at_distination --}}
                     <div class="form-group">
@@ -92,7 +91,7 @@
                     <div class="form-group">
                         <input type="text" name="at_distination_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_distination_date" value="{{ $track->at_distination_date }}">
+                               placeholder="at_distination_date" value="{{ $track->at_distination_date }}" id="at_distination_date">
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
@@ -139,7 +138,7 @@
                 (document.getElementById('at_origin')),
                 {types: ['geocode']});
             new google.maps.places.Autocomplete(
-                (document.getElementById('freight_loaded')),
+                (document.getElementById('freight_loaded_date')),
                 {types: ['geocode']});
             new google.maps.places.Autocomplete(
                 (document.getElementById('current_location')),
