@@ -37,7 +37,7 @@ Then create a environment file using this command-
 cp .env.example .env
 ```
 
-Then edit `.env` file with appropriate credential for your database server. Just edit these two parameter(`DB_USERNAME`, `DB_PASSWORD`).
+Then edit `.env` file with appropriate credential for your database server. Just edit these two parameter(`DB_USERNAME`, `DB_PASSWORD`), and [desirable] add `GOOGLE_MAPS_API_KEY`.
 
 Then create a database named `tracking` and then do a database migration using this command-
 ```
