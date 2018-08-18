@@ -15,19 +15,34 @@ class CreateTracksTable extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('id');
+            //load information
             $table->string('code');
             $table->string('from');
             $table->string('to');
-            $table->string('dimansions')->nullable();//            additional fields, not required
-            $table->dateTime('start_time');
-//            additional fields, not required
-            $table->string('at_origin')->nullable();
-            $table->string('freight_loaded')->nullable();
-            $table->string('current_location')->nullable();
-            $table->dateTime('end_time');//at destination
-            $table->string('delivered')->nullable();
-            $table->string('pod')->nullable();
+            $table->string('load')->nullable();//sizes, for example 2 pc(s) 750pc(s)
+            $table->string('dims')->nullable();
 
+            //load status
+
+            $table->string('at_origin')->nullable();
+            $table->dateTime('at_origin_date')->nullable();
+
+            $table->string('freight_loaded')->nullable();
+            $table->dateTime('freight_loaded_date')->nullable();
+
+            $table->string('current_location')->nullable();
+            $table->dateTime('current_location_date')->nullable();
+
+            $table->string('at_distination')->nullable();
+            $table->dateTime('at_distination_date')->nullable();
+
+            $table->dateTime('delivered')->nullable();
+
+            //Load summary
+
+            $table->string('status');
+
+            $table->string('pod');
 
             $table->timestamps();
         });

@@ -67,8 +67,19 @@ class TrackController extends Controller
             abort(404);
         }
 
-        $from = !empty($track->current_location) ? $track->current_location : $track->from;
-        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to);
+        if (!empty($track->at_distination)) {
+            $from = $track->at_distination;
+        } elseif (!empty($track->current_location)) {
+            $from = $track->current_location;
+        } elseif (!empty($track->freight_loaded)) {
+            $from = $track->freight_loaded;
+        } elseif (!empty($track->at_origin)) {
+            $from = $track->at_origin;
+        } elseif (!empty($track->from)) {
+            $from = $track->from;
+        }
+
+        $url = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to."&key=".env('GOOGLE_MAPS_API_KEY'));
 
         $api = json_decode($url);
 

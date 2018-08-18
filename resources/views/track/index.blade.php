@@ -19,8 +19,8 @@
                 <th>code</th>
                 <th>from</th>
                 <th>to</th>
-                <th>start date</th>
-                <th>end date</th>
+                <th>delivered</th>
+                <th>status</th>
                 </thead>
                 <tbody>
                 @foreach($tracks as $track)
@@ -28,8 +28,8 @@
                         <td>{{ $track->code }}</td>
                         <td>{{ $track->from }}</td>
                         <td>{{ $track->to }}</td>
-                        <td>{{ $track->start_time }}</td>
-                        <td>{{ $track->end_time }}</td>
+                        <td>{{ $track->delivered }}</td>
+                        <td>{{ $track->status }}</td>
                         <td>
                             <div class='btn-group'>
                                 <a href="{{route('tracks.edit',$track->id)}}" class='btn btn-secondary btn-sm'>

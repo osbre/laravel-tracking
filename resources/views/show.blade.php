@@ -21,6 +21,8 @@
         <div class="row">
             <div class="col-lg-4">
                 <ul class="list-group w-100">
+                    <h4>Load information</h4>
+
                     <li class="list-group-item">
                         Code: <b>{{ $track->code }}</b>
                     </li>
@@ -30,43 +32,61 @@
                     <li class="list-group-item">
                         To:<br><b>{{ $track->to }}</b>
                     </li>
-                    @if(!empty($track->dimansions))
+                    @if(!empty($track->load))
                         <li class="list-group-item">
-                            Dimansions: <br><b>{{ $track->dimansions }}</b>
+                            load: <br><b>{{ $track->load }}</b>
                         </li>
                     @endif
-                    <li class="list-group-item">
-                        Start time:<br><b>{{ $track->start_time }}</b>
-                    </li>
+                    @if(!empty($track->dims))
+                        <li class="list-group-item">
+                            dims: <br><b>{{ $track->dims }}</b>
+                        </li>
+                    @endif
+                    <h4>Load status</h4>
+                    @if(!empty($track->at_origin))
+                        <li class="list-group-item">
+                            at_origin:
+                            <br><b>{{ $track->at_origin }}</b>
+                            <br><b>{{ $track->at_origin_date }}</b>
+                        </li>
+                    @endif
+                    @if(!empty($track->freight_loaded))
+                        <li class="list-group-item">
+                            freight_loaded:
+                            <br><b>{{ $track->freight_loaded }}</b>
+                            <br><b>{{ $track->freight_loaded_date }}</b>
+                        </li>
+                    @endif
+                    @if(!empty($track->current_location))
+                        <li class="list-group-item">
+                            current_location:
+                            <br><b>{{ $track->current_location }}</b>
+                            <br><b>{{ $track->current_location_date }}</b>
+                        </li>
+                    @endif
+                    @if(!empty($track->at_distination))
+                        <li class="list-group-item">
+                            at_distination:
+                            <br><b>{{ $track->at_distination }}</b>
+                            <br><b>{{ $track->at_distination_date }}</b>
+                        </li>
+                    @endif
 
                     <li class="list-group-item">
                         Time to arrival:<br><b>{{ $duration['text'] }}</b>
-                    </li>
-                    @if(!empty($track->at_origin))
-                        <li class="list-group-item">
-                            At Origin: <br><b>{{ $track->at_origin }}</b>
-                        </li>
-                    @endif
-
-                    @if(!empty($track->freight_loaded))
-                        <li class="list-group-item">
-                            Freight loaded: <br><b>{{ $track->freight_loaded }}</b>
-                        </li>
-                    @endif
-
-                    @if(!empty($track->current_location))
-                        <li class="list-group-item">
-                            Current location: <br><b>{{ $track->current_location }}</b>
-                        </li>
-                    @endif
-
-                    <li class="list-group-item">
-                        End time:<br><b>{{ $track->end_time }}</b>
                     </li>
 
                     @if(!empty($track->delivered))
                         <li class="list-group-item">
                             Delivered: <br><b>{{ $track->delivered }}</b>
+                        </li>
+                    @endif
+
+                    <h4>Load summary</h4>
+
+                    @if(!empty($track->status))
+                        <li class="list-group-item">
+                            status: <br><b>{{ $track->status }}</b>
                         </li>
                     @endif
 
@@ -77,11 +97,10 @@
                     @endif
                 </ul>
             </div>
-            <div id="map" class="col-lg-8" style="width:100%; height:400px;"></div>
+            <div id="map" class="col-lg-8" style="width:100%; height:600px;"></div>
         </div>
     </div>
-    <script type="text/javascript"
-            src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=en-AU"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=en-AU&key={{ env('GOOGLE_MAPS_API_KEY') }}"></script>
 
     <script>
         var marker = false;
@@ -148,6 +167,5 @@
             }
             return points;
         }
-
     </script>
 @endsection
