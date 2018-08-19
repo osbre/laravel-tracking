@@ -110,7 +110,7 @@
                     <div class="form-group">
                         <input type="text" name="pod"
                                class="form-control form-control-lg"
-                               placeholder="pod" value="{{ $track->pod }}" required>
+                               placeholder="pod" value="{{ $track->pod }}">
                     </div>
 
                     <div class="form-group">
@@ -149,6 +149,6 @@
         }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initAutocomplete"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=en&callback=initAutocomplete"
             async defer></script>
 @endsection

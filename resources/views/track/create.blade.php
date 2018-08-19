@@ -108,7 +108,7 @@
                     <div class="form-group">
                         <input type="text" name="pod"
                                class="form-control form-control-lg"
-                               placeholder="pod" required>
+                               placeholder="pod">
                     </div>
 
                     <div class="form-group">
@@ -134,27 +134,31 @@
         });
 
         function initAutocomplete() {
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: "us"}
+            };
+
             new google.maps.places.Autocomplete(
                 (document.getElementById('from')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('to')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('at_origin')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('freight_loaded')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('current_location')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('at_distination')),
-                {types: ['geocode']});
+                options);
         }
-
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initAutocomplete"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=en&callback=initAutocomplete"
             async defer></script>
 @endsection

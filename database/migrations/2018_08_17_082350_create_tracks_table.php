@@ -40,9 +40,9 @@ class CreateTracksTable extends Migration
 
             //Load summary
 
-            $table->string('status');
+            $table->string('status')->nullable();
 
-            $table->string('pod');
+            $table->string('pod')->nullable();
 
             $table->timestamps();
         });
