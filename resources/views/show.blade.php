@@ -47,28 +47,28 @@
                         <li class="list-group-item">
                             at_origin:
                             <br><b>{{ $track->at_origin }}</b>
-                            <br><b>{{ $track->at_origin_date }}</b>
+                            <br><b>{{ Carbon\Carbon::parse($track->at_origin_date)->format('m-d-Y H:i') }}</b>
                         </li>
                     @endif
                     @if(!empty($track->freight_loaded))
                         <li class="list-group-item">
                             freight_loaded:
                             <br><b>{{ $track->freight_loaded }}</b>
-                            <br><b>{{ $track->freight_loaded_date }}</b>
+                            <br><b>{{ Carbon\Carbon::parse($track->freight_loaded_date)->format('m-d-Y H:i') }}</b>
                         </li>
                     @endif
                     @if(!empty($track->current_location))
                         <li class="list-group-item">
                             current_location:
                             <br><b>{{ $track->current_location }}</b>
-                            <br><b>{{ $track->current_location_date }}</b>
+                            <br><b>{{ Carbon\Carbon::parse($track->current_location_date)->format('m-d-Y H:i') }}</b>
                         </li>
                     @endif
                     @if(!empty($track->at_distination))
                         <li class="list-group-item">
                             at_distination:
                             <br><b>{{ $track->at_distination }}</b>
-                            <br><b>{{ $track->at_distination_date }}</b>
+                            <br><b>{{ Carbon\Carbon::parse($track->at_distination_date)->format('m-d-Y H:i') }}</b>
                         </li>
                     @endif
 
@@ -78,7 +78,8 @@
 
                     @if(!empty($track->delivered))
                         <li class="list-group-item">
-                            Delivered: <br><b>{{ $track->delivered }}</b>
+                            Delivered:
+                            <br><b>{{ Carbon\Carbon::parse($track->delivered)->format('m-d-Y H:i') }}</b>
                         </li>
                     @endif
 

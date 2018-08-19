@@ -33,30 +33,4 @@ class Track extends Model
     {
         $this->attributes['delivered'] = Carbon::createFromFormat('m-d-Y H:i', $value);
     }
-
-    //TODO - get all date attributes and format like this: m-d-Y H:i
-    /*public function getAtOriginDateAttribute($value)
-    {
-        $this->attributes['at_origin_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('m-d-Y H:i');
-    }
-
-    public function getFreightLoadedDateAttribute($value)
-    {
-        $this->attributes['freight_loaded_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('m-d-Y H:i');
-    }
-
-    public function getCurrentLocationDateAttribute($value)
-    {
-        $this->attributes['current_location_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('m-d-Y H:i');
-    }
-
-    public function getAtDistinationDateAttribute($value)
-    {
-        $this->attributes['at_distination_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('m-d-Y H:i');
-    }
-
-    public function getDeliveredAttribute($value)
-    {
-        $this->attributes['delivered'] = Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('m-d-Y H:i');
-    }*/
 }
