@@ -5,18 +5,27 @@
 @section('content')
     <div class="container">
         <div class="row pb-2">
-            <form class="mx-2 my-auto d-inline w-100" method="post" action="{{ route('track') }}">
-                @csrf
-                <div class="input-group">
-                    <input type="text" class="form-control border border-right-0" placeholder="code" required
-                           name="code" value="{{ $track->code }}">
-                    <span class="input-group-append">
+            @if(!empty(env('LOGO_PATH')))
+                <div class="col-sm-1">
+                    <a href="{{ env('LOGO_LINK') ? env('LOGO_LINK') : '#' }}">
+                        <img src="{{ env('LOGO_PATH') }}" alt="logo" style="max-width: 100px;">
+                    </a>
+                </div>
+            @endif
+            <div class="col-lg-11">
+                <form class="mx-2 my-auto d-inline w-100" method="post" action="{{ route('track') }}">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" class="form-control border border-right-0" placeholder="code" required
+                               name="code" value="{{ $track->code }}">
+                        <span class="input-group-append">
                         <button class="btn btn-success border border-left-0" type="button">
                             CHECK
                         </button>
                     </span>
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-4">
@@ -34,7 +43,8 @@
                     </div>
                     @if(!empty($track->load_pc) || !empty($track->load_pc))
                         <li class="list-group-item">
-                            Load: <br><b>{{ $track->load_pc ? $track->load_pc .' pc' : '' }} {{ $track->load_lbs ? $track->load_lbs .' lbs' : '' }}</b>
+                            Load:
+                            <br><b>{{ $track->load_pc ? $track->load_pc .' pc' : '' }} {{ $track->load_lbs ? $track->load_lbs .' lbs' : '' }}</b>
                         </li>
                     @endif
                     @if(!empty($track->dims))
