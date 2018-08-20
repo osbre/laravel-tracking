@@ -128,24 +128,29 @@
         });
 
         function initAutocomplete() {
+            var options = {
+                types: ['geocode'],
+                componentRestrictions: {country: "us"}
+            };
+
             new google.maps.places.Autocomplete(
                 (document.getElementById('from')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('to')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('at_origin')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('freight_loaded')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('current_location')),
-                {types: ['geocode']});
+                options);
             new google.maps.places.Autocomplete(
                 (document.getElementById('at_distination')),
-                {types: ['geocode']});
+                options);
         }
 
     </script>

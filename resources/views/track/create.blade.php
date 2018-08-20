@@ -118,14 +118,6 @@
             </div>
         </div>
     </div>
-    <script>
-        /*new Picker(document.getElementById('start_time'), {
-            format: 'YYYY:MM:DD HH:mm:00',
-        });
-        new Picker(document.getElementById('end_time'), {
-            format: 'YYYY:MM:DD HH:mm:00',
-        });*/
-    </script>
 
     <script>
         flatpickr(".js-date-picker", {
@@ -135,7 +127,7 @@
 
         function initAutocomplete() {
             var options = {
-                types: ['(cities)'],
+                types: ['geocode'],
                 componentRestrictions: {country: "us"}
             };
 
