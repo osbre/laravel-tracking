@@ -65,3 +65,4 @@ Then go to `http://localhost:8000` from your browser and see the app.
 
 # Todo 
 - Add demo
+- Update screenshots
