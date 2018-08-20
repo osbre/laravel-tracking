@@ -15,100 +15,126 @@
             <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
                 <form action="{{ route('tracks.store') }}" method="post">
                     @csrf
-                    <h4>Load information</h4>
+                    <div class="btn-group d-flex" role="group">
+                        <a href="{{ route('tracks.index') }}" class="btn btn-warning w-100">Back</a>
+                        <button type="submit" class="btn btn-info w-100">Save</button>
+                    </div>
+                    <h4 class="text-info">Load Information</h4>
                     {{-- code --}}
                     <div class="form-group">
-                        <input type="text" name="code" class="form-control form-control-lg" placeholder="code" required>
+                        <label for="">Tracking</label>
+                        <input type="text" name="code" class="form-control form-control-lg" placeholder="Tracking"
+                               required>
                     </div>
                     {{-- from --}}
                     <div class="form-group">
-                        <input type="text" name="from" class="form-control form-control-lg" placeholder="from" required
+                        <label for="">From</label>
+                        <input type="text" name="from" class="form-control form-control-lg" placeholder="From" required
                                id="from">
                     </div>
                     {{-- to --}}
                     <div class="form-group" id="locationField">
-                        <input type="text" name="to" class="form-control form-control-lg" placeholder="to" required
+                        <label for="">To</label>
+                        <input type="text" name="to" class="form-control form-control-lg" placeholder="To" required
                                id="to">
                     </div>
                     {{-- dims --}}
                     <div class="form-group">
+                        <label for="">Dimensions (LxWxH)</label>
                         <input type="text" name="dims"
                                class="form-control form-control-lg"
-                               placeholder="dims">
+                               placeholder="Dimensions (LxWxH)">
                     </div>
                     {{-- load --}}
                     <div class="form-group">
-                        <input type="text" name="load"
-                               class="form-control form-control-lg"
-                               placeholder="load">
+                        <label for="">Load</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" name="pc" placeholder="pc(s)">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" name="lbs" placeholder="lbs">
+                            </div>
+                        </div>
                     </div>
-                    <h4>Load status</h4>
+                    <h4 class="text-info">Load Status</h4>
                     {{-- at_origin --}}
                     <div class="form-group">
+                        <label for="">Origin</label>
                         <input type="text" name="at_origin" id="at_origin"
                                class="form-control form-control-lg"
-                               placeholder="at_origin" id="at_origin">
+                               placeholder="Origin" id="at_origin">
                     </div>
                     {{-- at_origin_date --}}
                     <div class="form-group">
+                        <label for="">Origin date</label>
                         <input type="text" name="at_origin_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_origin_date">
+                               placeholder="Origin date">
                     </div>
                     {{-- freight_loaded --}}
                     <div class="form-group">
+                        <label for="">Freight loaded</label>
                         <input type="text" name="freight_loaded"
                                class="form-control form-control-lg"
-                               placeholder="freight_loaded" id="freight_loaded">
+                               placeholder="Freight loaded" id="freight_loaded">
                     </div>
                     {{-- freight_loaded_date --}}
                     <div class="form-group">
+                        <label for="">Freight loaded date</label>
                         <input type="text" name="freight_loaded_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="freight_loaded_date">
+                               placeholder="Freight loaded date">
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
+                        <label for="">Current location</label>
                         <input type="text" name="current_location" id="current_location"
                                class="form-control form-control-lg"
-                               placeholder="current_location" id="current_location">
+                               placeholder="Current location" id="current_location">
                     </div>
                     {{-- current_location_date --}}
                     <div class="form-group">
+                        <label for="">Current location date</label>
                         <input type="text" name="current_location_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="current_location_date">
+                               placeholder="Current location date">
                     </div>
                     {{-- at_distination --}}
                     <div class="form-group">
+                        <label for="">Distination</label>
                         <input type="text" name="at_distination"
                                class="form-control form-control-lg"
-                               placeholder="at_distination" id="at_distination">
+                               placeholder="Distination" id="at_distination">
                     </div>
                     {{-- at_distination_date --}}
                     <div class="form-group">
+                        <label for="">Distination date</label>
                         <input type="text" name="at_distination_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_distination_date">
+                               placeholder="Distination date">
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
+                        <label for="">Delivered</label>
                         <input type="text" name="delivered"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="delivered">
+                               placeholder="Delivered">
                     </div>
-                    <h4>Load summary</h4>
+                    <h4 class="text-info">Load Summary</h4>
                     {{-- status --}}
                     <div class="form-group">
+                        <label for="">Status</label>
                         <input type="text" name="status"
                                class="form-control form-control-lg"
-                               placeholder="status">
+                               placeholder="Status">
                     </div>
                     {{-- status --}}
                     <div class="form-group">
+                        <label for="">Signed by</label>
                         <input type="text" name="pod"
                                class="form-control form-control-lg"
-                               placeholder="pod">
+                               placeholder="Signed by">
                     </div>
 
                     <div class="form-group">

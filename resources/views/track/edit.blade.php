@@ -16,101 +16,130 @@
                 <form action="{{ route('tracks.update', ['track' => $track]) }}" method="post">
                     @csrf
                     @method('PATCH')
-                    <h4>Load information</h4>
+                    <div class="btn-group d-flex" role="group">
+                        <a href="{{ route('tracks.index') }}" class="btn btn-warning w-100">Back</a>
+                        <button type="submit" class="btn btn-info w-100">Save</button>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                    </div>
+                    <h4 class="text-info">Load Information</h4>
                     {{-- code --}}
                     <div class="form-group">
-                        <input type="text" name="code" class="form-control form-control-lg" placeholder="code" required
-                               value="{{ $track->code }}">
+                        <label for="">Tracking</label>
+                        <input type="text" name="code" class="form-control form-control-lg" placeholder="Tracking"
+                               required value="{{ $track->code }}">
                     </div>
                     {{-- from --}}
                     <div class="form-group">
-                        <input type="text" name="from" class="form-control form-control-lg" placeholder="from" required
-                               value="{{ $track->from }}" id="from">
+                        <label for="">From</label>
+                        <input type="text" name="from" class="form-control form-control-lg" placeholder="From" required
+                               id="from" value="{{ $track->from }}">
                     </div>
                     {{-- to --}}
-                    <div class="form-group">
-                        <input type="text" name="to" class="form-control form-control-lg" placeholder="to" required
-                               value="{{ $track->to }}" id="to">
+                    <div class="form-group" id="locationField">
+                        <label for="">To</label>
+                        <input type="text" name="to" class="form-control form-control-lg" placeholder="To" required
+                               id="to" value="{{ $track->to }}">
                     </div>
                     {{-- dims --}}
                     <div class="form-group">
+                        <label for="">Dimensions (LxWxH)</label>
                         <input type="text" name="dims"
                                class="form-control form-control-lg"
-                               placeholder="dims" value="{{ $track->dims }}">
+                               placeholder="Dimensions (LxWxH)" value="{{ $track->dims }}">
                     </div>
                     {{-- load --}}
                     <div class="form-group">
-                        <input type="text" name="load"
-                               class="form-control form-control-lg"
-                               placeholder="load" value="{{ $track->load }}">
+                        <label for="">Load</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" name="load_pc" placeholder="pc(s)"
+                                       value="{{ $track->load_pc }}">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" name="load_lbs" placeholder="lbs"
+                                       value="{{ $track->load_lbs }}">
+                            </div>
+                        </div>
                     </div>
-                    <h4>Load status</h4>
+                    <h4 class="text-info">Load Status</h4>
                     {{-- at_origin --}}
                     <div class="form-group">
+                        <label for="">Origin</label>
                         <input type="text" name="at_origin" id="at_origin"
                                class="form-control form-control-lg"
-                               placeholder="at_origin" value="{{ $track->at_origin }}">
+                               placeholder="Origin" value="{{ $track->at_origin }}">
                     </div>
                     {{-- at_origin_date --}}
                     <div class="form-group">
+                        <label for="">Origin date</label>
                         <input type="text" name="at_origin_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_origin_date" value="{{ $track->at_origin_date }}">
+                               placeholder="Origin date" value="{{ $track->at_origin_date }}">
                     </div>
                     {{-- freight_loaded --}}
                     <div class="form-group">
+                        <label for="">Freight loaded</label>
                         <input type="text" name="freight_loaded"
                                class="form-control form-control-lg"
-                               placeholder="freight_loaded" value="{{ $track->freight_loaded }}" id="freight_loaded">
+                               placeholder="Freight loaded" id="freight_loaded" value="{{ $track->freight_loaded }}">
                     </div>
                     {{-- freight_loaded_date --}}
                     <div class="form-group">
+                        <label for="">Freight loaded date</label>
                         <input type="text" name="freight_loaded_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="freight_loaded_date" value="{{ $track->freight_loaded_date }}">
+                               placeholder="Freight loaded date" value="{{ $track->freight_loaded_date }}">
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
+                        <label for="">Current location</label>
                         <input type="text" name="current_location" id="current_location"
                                class="form-control form-control-lg"
-                               placeholder="current_location" value="{{ $track->current_location }}">
+                               placeholder="Current location" value="{{ $track->current_location }}">
                     </div>
                     {{-- current_location_date --}}
                     <div class="form-group">
+                        <label for="">Current location date</label>
                         <input type="text" name="current_location_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="current_location_date" value="{{ $track->current_location_date }}">
+                               placeholder="Current location date" value="{{ $track->current_location_date }}">
                     </div>
                     {{-- at_distination --}}
                     <div class="form-group">
+                        <label for="">Distination</label>
                         <input type="text" name="at_distination"
                                class="form-control form-control-lg"
-                               placeholder="at_distination" value="{{ $track->at_distination }}" id="at_distination">
+                               placeholder="Distination" id="at_distination" value="{{ $track->at_distination }}">
                     </div>
                     {{-- at_distination_date --}}
                     <div class="form-group">
+                        <label for="">Distination date</label>
                         <input type="text" name="at_distination_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="at_distination_date" value="{{ $track->at_distination_date }}">
+                               placeholder="Distination date" value="{{ $track->at_distination_date }}">
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
+                        <label for="">Delivered</label>
                         <input type="text" name="delivered"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="delivered" value="{{ $track->delivered }}">
+                               placeholder="Delivered" value="{{ $track->delivered }}">
                     </div>
-                    <h4>Load summary</h4>
+                    <h4 class="text-info">Load Summary</h4>
                     {{-- status --}}
                     <div class="form-group">
+                        <label for="">Status</label>
                         <input type="text" name="status"
                                class="form-control form-control-lg"
-                               placeholder="status" value="{{ $track->status }}">
+                               placeholder="Status" value="{{ $track->status }}">
                     </div>
                     {{-- status --}}
                     <div class="form-group">
+                        <label for="">Signed by</label>
                         <input type="text" name="pod"
                                class="form-control form-control-lg"
-                               placeholder="pod" value="{{ $track->pod }}">
+                               placeholder="Signed by" value="{{ $track->pod }}">
                     </div>
 
                     <div class="form-group">

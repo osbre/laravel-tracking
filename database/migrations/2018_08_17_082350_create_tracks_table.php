@@ -19,7 +19,10 @@ class CreateTracksTable extends Migration
             $table->string('code');
             $table->string('from');
             $table->string('to');
-            $table->string('load')->nullable();//sizes, for example 2 pc(s) 750pc(s)
+
+            $table->string('load_pc')->nullable();
+            $table->string('load_lbs')->nullable();
+
             $table->string('dims')->nullable();
 
             //load status
