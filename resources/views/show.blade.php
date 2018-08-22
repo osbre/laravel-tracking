@@ -19,7 +19,7 @@
                         <input type="text" class="form-control border border-right-0" placeholder="code" required
                                name="code" value="{{ $track->code }}">
                         <span class="input-group-append">
-                        <button class="btn btn-success border border-left-0" type="button">
+                        <button class="btn btn-success border border-left-0" type="submit">
                             CHECK
                         </button>
                     </span>
