@@ -60,28 +60,28 @@
                 <h4>Load status</h4>
                 @if(!empty($track->at_origin))
                     <li class="list-group-item">
-                        at_origin:
+                        At origin:
                         <br><b>{{ $track->at_origin }}</b>
                         <br><b>{{ $track->at_origin_date->format('m-d-Y H:i') }}</b>
                     </li>
                 @endif
                 @if(!empty($track->freight_loaded))
                     <li class="list-group-item">
-                        freight_loaded:
+                        Freight loaded:
                         <br><b>{{ $track->freight_loaded }}</b>
                         <br><b>{{ $track->freight_loaded_date->format('m-d-Y H:i') }}</b>
                     </li>
                 @endif
                 @if(!empty($track->current_location))
                     <li class="list-group-item">
-                        current_location:
+                        Current location:
                         <br><b>{{ $track->current_location }}</b>
                         <br><b>{{ $track->current_location_date->format('m-d-Y H:i') }}</b>
                     </li>
                 @endif
                 @if(!empty($track->at_distination))
                     <li class="list-group-item">
-                        at_distination:
+                        At distination:
                         <br><b>{{ $track->at_distination }}</b>
                         <br><b>{{ $track->at_distination_date->format('m-d-Y H:i') }}</b>
                     </li>
@@ -103,7 +103,7 @@
 
                 @if(!empty($track->status))
                     <li class="list-group-item">
-                        status: <br><b>{{ $track->status }}</b>
+                        Status: <br><b>{{ $track->status }}</b>
                     </li>
                 @endif
 
