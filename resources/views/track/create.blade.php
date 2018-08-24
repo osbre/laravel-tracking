@@ -50,10 +50,10 @@
                         <label for="">Load</label>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="pc" placeholder="pc(s)">
+                                <input type="text" class="form-control" name="load_pc" placeholder="pc(s)">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="lbs" placeholder="lbs">
+                                <input type="text" class="form-control" name="load_lbs" placeholder="lbs">
                             </div>
                         </div>
                     </div>

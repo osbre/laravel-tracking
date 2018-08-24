@@ -41,7 +41,7 @@
                     <div class="list-group-item">
                         To:<br><b>{{ $track->to }}</b>
                     </div>
-                    @if(!empty($track->load_pc) || !empty($track->load_pc))
+                    @if(!empty($track->load_pc) || !empty($track->load_lbs))
                         <li class="list-group-item">
                             Load:
                             <br><b>{{ $track->load_pc ? $track->load_pc .' pc' : '' }} {{ $track->load_lbs ? $track->load_lbs .' lbs' : '' }}</b>
