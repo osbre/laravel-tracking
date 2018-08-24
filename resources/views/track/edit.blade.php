@@ -155,9 +155,12 @@
     </div>
 
     <script>
+        var date = new Date();
         flatpickr(".js-date-picker", {
             enableTime: true,
             dateFormat: "m-d-Y H:i",
+            defaultHour: date.getHours(),
+            defaultMinute: date.getMinutes(),
         });
 
         function initAutocomplete() {
