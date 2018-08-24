@@ -75,7 +75,8 @@
                         <label for="">Origin date</label>
                         <input type="text" name="at_origin_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="Origin date" value="{{ $track->at_origin_date }}">
+                               placeholder="Origin date"
+                               value="{{ $track->at_origin_date ? $track->at_origin_date->format('m-d-Y H:i') : '' }}">
                     </div>
                     {{-- freight_loaded --}}
                     <div class="form-group">
@@ -89,7 +90,8 @@
                         <label for="">Freight loaded date</label>
                         <input type="text" name="freight_loaded_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="Freight loaded date" value="{{ $track->freight_loaded_date }}">
+                               placeholder="Freight loaded date"
+                               value="{{ $track->freight_loaded_date ? $track->freight_loaded_date->format('m-d-Y H:i') : '' }}">
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
@@ -103,7 +105,8 @@
                         <label for="">Current location date</label>
                         <input type="text" name="current_location_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="Current location date" value="{{ $track->current_location_date }}">
+                               placeholder="Current location date"
+                               value="{{ $track->current_location_date ? $track->current_location_date->format('m-d-Y H:i') : '' }}">
                     </div>
                     {{-- at_distination --}}
                     <div class="form-group">
@@ -117,7 +120,8 @@
                         <label for="">Distination date</label>
                         <input type="text" name="at_distination_date"
                                class="form-control form-control-lg js-date-picker"
-                               placeholder="Distination date" value="{{ $track->at_distination_date }}">
+                               placeholder="Distination date"
+                               value="{{ $track->at_distination_date ? $track->at_distination_date->format('m-d-Y H:i') : '' }}">
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
