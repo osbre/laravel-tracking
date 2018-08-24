@@ -69,21 +69,23 @@
                     <li class="list-group-item">
                         Freight loaded:
                         <br><b>{{ $track->freight_loaded }}</b>
-                        <br><b>{{ $track->freight_loaded_date->format('m-d-Y H:i') }}</b>
+                        <br><b>{{ $track->freight_loaded_date ? $track->freight_loaded_date->format('m-d-Y H:i') : '' }}</b>
                     </li>
                 @endif
                 @if(!empty($track->current_location))
                     <li class="list-group-item">
                         Current location:
                         <br><b>{{ $track->current_location }}</b>
-                        <br><b>{{ $track->current_location_date->format('m-d-Y H:i') }}</b>
+                        <br><b>{{ $track->current_location_date ? $track->current_location_date->format('m-d-Y H:i') : '' }}</b>
+
                     </li>
                 @endif
                 @if(!empty($track->at_distination))
                     <li class="list-group-item">
                         At distination:
                         <br><b>{{ $track->at_distination }}</b>
-                        <br><b>{{ $track->at_distination_date->format('m-d-Y H:i') }}</b>
+                        <br><b>{{ $track->at_distination_date ? $track->at_distination_date->format('m-d-Y H:i') : '' }}</b>
+
                     </li>
                 @endif
 
