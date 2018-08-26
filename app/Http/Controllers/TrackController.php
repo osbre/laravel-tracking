@@ -51,11 +51,7 @@ class TrackController extends Controller
      */
     public function show(Request $request)
     {
-        $track = Track::where('code', $request->code)->first();
-
-        if (empty($track)) {
-            abort(404);
-        }
+        $track = Track::where('code', $request->code)->firstOrFail();
 
         if (!empty($track->at_distination)) {
             $from = $track->at_distination;
