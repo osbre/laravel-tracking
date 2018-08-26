@@ -43,7 +43,7 @@ class CreateTracksTable extends Migration
 
             //Load summary
 
-            $table->string('status')->nullable();
+            $table->enum('status', [0, 1, 2, 3, 4])->nullable();
 
             $table->string('pod')->nullable();
 

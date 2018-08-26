@@ -16,7 +16,8 @@
                 <form class="mx-2 my-auto d-inline w-100" method="post" action="{{ route('track') }}">
                     @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control border border-right-0" placeholder="code" required
+                        <input type="text" class="form-control border border-right-0" placeholder="Enter tracking #"
+                               required
                                name="code" value="{{ $track->code }}">
                         <span class="input-group-append">
                         <button class="btn btn-success border border-left-0" type="submit">
@@ -103,11 +104,28 @@
             <div class="col-lg-4">
                 <h4>Load summary</h4>
 
-                @if(!empty($track->status))
-                    <li class="list-group-item">
-                        Status: <br><b>{{ $track->status }}</b>
-                    </li>
-                @endif
+                <li class="list-group-item">
+                    Status: <br>
+                    <b>
+                        @switch($track->status)
+                            @case(0)
+                            On away a pick up
+                            @break
+                            @case(1)
+                            At pick up
+                            @break
+                            @case(2)
+                            At transit
+                            @break
+                            @case(3)
+                            At delivery
+                            @break
+                            @case(4)
+                            Delivered
+                            @break
+                        @endswitch
+                    </b>
+                </li>
 
                 @if(!empty($track->pod))
                     <li class="list-group-item">

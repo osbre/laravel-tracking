@@ -125,9 +125,13 @@
                     {{-- status --}}
                     <div class="form-group">
                         <label for="">Status</label>
-                        <input type="text" name="status"
-                               class="form-control form-control-lg"
-                               placeholder="Status">
+                        <select name="status" class="form-control form-control-lg">
+                            <option value="0" selected>On away a pick up</option>
+                            <option value="1">At pick up</option>
+                            <option value="2">At transit</option>
+                            <option value="3">At delivery</option>
+                            <option value="4">Delivered</option>
+                        </select>
                     </div>
                     {{-- status --}}
                     <div class="form-group">

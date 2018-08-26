@@ -41,7 +41,7 @@
                                 <label class="sr-only" for="codeInput">Code</label>
                                 <input type="text" name="code" class="form-control form-control-lg mb-2 mr-sm-2"
                                        id="codeInput"
-                                       placeholder="Tracking">
+                                       placeholder="Enter tracking #">
                                 <button type="submit" class="btn btn-lg btn-info mb-2">CHECK</button>
                             </form>
                         </div>

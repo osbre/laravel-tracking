@@ -134,9 +134,13 @@
                     {{-- status --}}
                     <div class="form-group">
                         <label for="">Status</label>
-                        <input type="text" name="status"
-                               class="form-control form-control-lg"
-                               placeholder="Status" value="{{ $track->status }}">
+                        <select name="status" class="form-control form-control-lg">
+                            <option value="0" {{ $track->status == 0 ? 'selected' : '' }}>On away a pick up</option>
+                            <option value="1" {{ $track->status == 1 ? 'selected' : '' }}>At pick up</option>
+                            <option value="2" {{ $track->status == 2 ? 'selected' : '' }}>At transit</option>
+                            <option value="3" {{ $track->status == 3 ? 'selected' : '' }}>At delivery</option>
+                            <option value="4" {{ $track->status == 4 ? 'selected' : '' }}>Delivered</option>
+                        </select>
                     </div>
                     {{-- status --}}
                     <div class="form-group">
