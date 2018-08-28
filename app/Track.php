@@ -30,7 +30,6 @@ class Track extends Model
         if (!empty($value)) {
             $this->attributes['current_location_date'] = Carbon::createFromFormat('m-d-Y H:i', $value);
         }
-
     }
 
     public function setAtDistinationDateAttribute($value)
@@ -46,5 +45,16 @@ class Track extends Model
         if (!empty($value)) {
             $this->attributes['delivered'] = Carbon::createFromFormat('m-d-Y H:i', $value);
         }
+    }
+
+    /**
+     * Check, is now user must update track (user must update track every two hours)
+     * @return mixed
+     */
+    public function getIsUpdateExpiredAttribute()
+    {
+        $date = $this->updated_at->addHour(2);
+        $now = Carbon::now();
+        return $date->lessThan($now);
     }
 }
