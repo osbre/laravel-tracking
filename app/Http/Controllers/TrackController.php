@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Location;
 use App\Track;
 use Illuminate\Http\Request;
 
@@ -43,21 +44,29 @@ class TrackController extends Controller
         $locations = collect();
 
         foreach ($request->freight_loads as $key => $freight_load) {
-            $locations->push([
-                'value' => $freight_load,
-                'type' => 'freight_loaded',
-                'date' => $request->freight_loaded_dates[$key]
-            ]);
-        }
-        foreach ($request->destinations as $key => $destination) {
-            $locations->push([
-                'value' => $destination,
-                'type' => 'destination',
-                'date' => $request->destination_dates[$key]
-            ]);
+            if (!empty($freight_load)) {
+                $locations->push([
+                    'value' => $freight_load,
+                    'type' => 'freight_loaded',
+                    'date' => $request->freight_loaded_dates[$key]
+                ]);
+            }
         }
 
-        $track->locations()->createMany($locations->toArray());
+        foreach ($request->destinations as $key => $destination) {
+            if (!empty($destination)) {
+                $locations->push([
+                    'value' => $destination,
+                    'type' => 'destination',
+                    'date' => $request->destination_dates[$key]
+                ]);
+            }
+        }
+
+
+        if ($locations->isNotEmpty()) {
+            $track->locations()->createMany($locations->toArray());
+        }
 
         return redirect()->route('tracks.index');
     }
@@ -72,12 +81,14 @@ class TrackController extends Controller
     {
         $track = Track::where('code', $request->code)->firstOrFail();
 
-        if (!empty($track->at_distination)) {
-            $from = $track->at_distination;
+        $destinations = $track->locations()->where('type', 'destination')->get();
+        $freight_loads = $track->locations()->where('type', 'destination')->get();
+        if (!empty($destinations)) {
+            $from = $destinations->last()->value;
         } elseif (!empty($track->current_location)) {
             $from = $track->current_location;
-        } elseif (!empty($track->freight_loaded)) {
-            $from = $track->freight_loaded;
+        } elseif (!empty($freight_loads)) {
+            $from = $freight_loads->last()->value;
         } elseif (!empty($track->at_origin)) {
             $from = $track->at_origin;
         } elseif (!empty($track->from)) {
@@ -93,10 +104,6 @@ class TrackController extends Controller
 
         $api = json_decode($output);
 
-        $miles = floatval($api->routes[0]->legs[0]->distance->text);
-        //$time = sprintf('%02d hours %02d minutes', (int) $miles, fmod($miles, 1) * 60);
-//dd($miles);
-        //todo - go to messenger, an read solution
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
 
@@ -135,23 +142,29 @@ class TrackController extends Controller
 
         $locations = collect();
 
-        foreach ($request->freight_loads as $key => $freight_load) {
-            $locations->push([
-                'value' => $freight_load,
-                'type' => 'freight_loaded',
-                'date' => $request->freight_loaded_dates[$key]
-            ]);
+        if (!empty($request->freight_loads)) {
+            foreach ($request->freight_loads as $key => $freight_load) {
+                $locations->push([
+                    'value' => $freight_load,
+                    'type' => 'freight_loaded',
+                    'date' => $request->freight_loaded_dates[$key]
+                ]);
+            }
         }
-        foreach ($request->destinations as $key => $destination) {
-            $locations->push([
-                'value' => $destination,
-                'type' => 'destination',
-                'date' => $request->destination_dates[$key]
-            ]);
+        if (!empty($request->destinations)) {
+            foreach ($request->destinations as $key => $destination) {
+                $locations->push([
+                    'value' => $destination,
+                    'type' => 'destination',
+                    'date' => $request->destination_dates[$key]
+                ]);
+            }
         }
 
-        $track->locations()->delete();
-        $track->locations()->createMany($locations->toArray());
+        if (!empty($request->destinations) || !empty($request->destinations)) {
+            $track->locations()->delete();
+            $track->locations()->createMany($locations->toArray());
+        }
 
         return redirect()->route('tracks.index');
     }

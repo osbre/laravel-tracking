@@ -145,7 +145,8 @@
                                         <label>Destination date</label>
                                         <input type="text" name="destination_dates[]"
                                                class="form-control form-control-lg js-date-picker"
-                                               placeholder="Destination date" value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
+                                               placeholder="Destination date"
+                                               value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
                                     </div>
                                     <button type="button" class="btn btn-danger delete_btn">DELETE</button>
                                 </div>
