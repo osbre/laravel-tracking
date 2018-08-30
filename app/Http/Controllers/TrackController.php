@@ -161,8 +161,8 @@ class TrackController extends Controller
             }
         }
 
+        $track->locations()->delete();
         if (!empty($request->freight_loads) || !empty($request->destinations)) {
-            $track->locations()->delete();
             $track->locations()->createMany($locations->toArray());
         }
 
