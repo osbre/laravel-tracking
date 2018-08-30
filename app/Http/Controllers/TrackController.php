@@ -83,11 +83,11 @@ class TrackController extends Controller
 
         $destinations = $track->locations()->where('type', 'destination')->get();
         $freight_loads = $track->locations()->where('type', 'freight_loaded')->get();
-        if ($destinations->isNotEmpty()) {
+        if (!$destinations->isEmpty()) {
             $from = $destinations->last()->value;
         } elseif (!empty($track->current_location)) {
             $from = $track->current_location;
-        } elseif (!empty($freight_loads)) {
+        } elseif (!$freight_loads->isEmpty()) {
             $from = $freight_loads->last()->value;
         } elseif (!empty($track->at_origin)) {
             $from = $track->at_origin;
