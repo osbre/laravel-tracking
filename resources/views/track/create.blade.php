@@ -22,32 +22,32 @@
                     <h4 class="text-info">Load Information</h4>
                     {{-- code --}}
                     <div class="form-group">
-                        <label for="">Tracking</label>
+                        <label>Tracking</label>
                         <input type="text" name="code" class="form-control form-control-lg" placeholder="Tracking"
                                required>
                     </div>
                     {{-- from --}}
                     <div class="form-group">
-                        <label for="">From</label>
-                        <input type="text" name="from" class="form-control form-control-lg" placeholder="From" required
-                               id="from">
+                        <label>From</label>
+                        <input type="text" name="from" class="form-control form-control-lg autocomplete"
+                               placeholder="From" required>
                     </div>
                     {{-- to --}}
                     <div class="form-group" id="locationField">
-                        <label for="">To</label>
-                        <input type="text" name="to" class="form-control form-control-lg" placeholder="To" required
-                               id="to">
+                        <label>To</label>
+                        <input type="text" name="to" class="form-control form-control-lg autocomplete" placeholder="To"
+                               required>
                     </div>
                     {{-- dims --}}
                     <div class="form-group">
-                        <label for="">Dimensions (LxWxH)</label>
+                        <label>Dimensions (LxWxH)</label>
                         <input type="text" name="dims"
                                class="form-control form-control-lg"
                                placeholder="Dimensions (LxWxH)">
                     </div>
                     {{-- load --}}
                     <div class="form-group">
-                        <label for="">Load</label>
+                        <label>Load</label>
                         <div class="row">
                             <div class="col">
                                 <input type="text" class="form-control" name="load_pc" placeholder="pc(s)">
@@ -60,63 +60,77 @@
                     <h4 class="text-info">Load Status</h4>
                     {{-- at_origin --}}
                     <div class="form-group">
-                        <label for="">Origin</label>
-                        <input type="text" name="at_origin" id="at_origin"
-                               class="form-control form-control-lg"
-                               placeholder="Origin" id="at_origin">
+                        <label>Origin</label>
+                        <input type="text" name="at_origin"
+                               class="form-control form-control-lg autocomplete"
+                               placeholder="Origin">
                     </div>
                     {{-- at_origin_date --}}
                     <div class="form-group">
-                        <label for="">Origin date</label>
+                        <label>Origin date</label>
                         <input type="text" name="at_origin_date"
                                class="form-control form-control-lg js-date-picker"
                                placeholder="Origin date">
                     </div>
-                    {{-- freight_loaded --}}
-                    <div class="form-group">
-                        <label for="">Freight loaded</label>
-                        <input type="text" name="freight_loaded"
-                               class="form-control form-control-lg"
-                               placeholder="Freight loaded" id="freight_loaded">
-                    </div>
-                    {{-- freight_loaded_date --}}
-                    <div class="form-group">
-                        <label for="">Freight loaded date</label>
-                        <input type="text" name="freight_loaded_date"
-                               class="form-control form-control-lg js-date-picker"
-                               placeholder="Freight loaded date">
+                    {{-- freight_loaded list--}}
+                    <div id="freight_loaded_container">
+                        <label>
+                            <h3>
+                                Freight loaded
+                            </h3>
+                        </label>
+                        <button type="button" class="btn btn-success btn-block" id="add_freight_loaded_btn">Add freight
+                            loaded
+                        </button>
+                        <div class="card card-body">
+                            {{-- freight_loaded--}}
+                            <div class="form-group">
+                                <label>Freight loaded</label>
+                                <input type="text" name="freight_loads[]"
+                                       class="form-control form-control-lg autocomplete"
+                                       placeholder="Freight loaded">
+                            </div>
+                            {{-- freight_loaded_date --}}
+                            <div class="form-group">
+                                <label>Freight loaded date</label>
+                                <input type="text" name="freight_loaded_dates[]"
+                                       class="form-control form-control-lg js-date-picker"
+                                       placeholder="Freight loaded date">
+                            </div>
+                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>
+                        </div>
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
-                        <label for="">Current location</label>
-                        <input type="text" name="current_location" id="current_location"
-                               class="form-control form-control-lg"
-                               placeholder="Current location" id="current_location">
+                        <label>Current location</label>
+                        <input type="text" name="current_location"
+                               class="form-control form-control-lg autocomplete"
+                               placeholder="Current location">
                     </div>
                     {{-- current_location_date --}}
                     <div class="form-group">
-                        <label for="">Current location date</label>
+                        <label>Current location date</label>
                         <input type="text" name="current_location_date"
                                class="form-control form-control-lg js-date-picker"
                                placeholder="Current location date">
                     </div>
                     {{-- at_distination --}}
                     <div class="form-group">
-                        <label for="">Distination</label>
+                        <label>Distination</label>
                         <input type="text" name="at_distination"
-                               class="form-control form-control-lg"
-                               placeholder="Distination" id="at_distination">
+                               class="form-control form-control-lg autocomplete"
+                               placeholder="Distination">
                     </div>
                     {{-- at_distination_date --}}
                     <div class="form-group">
-                        <label for="">Distination date</label>
+                        <label>Distination date</label>
                         <input type="text" name="at_distination_date"
                                class="form-control form-control-lg js-date-picker"
                                placeholder="Distination date">
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
-                        <label for="">Delivered</label>
+                        <label>Delivered</label>
                         <input type="text" name="delivered"
                                class="form-control form-control-lg js-date-picker"
                                placeholder="Delivered">
@@ -124,7 +138,7 @@
                     <h4 class="text-info">Load Summary</h4>
                     {{-- status --}}
                     <div class="form-group">
-                        <label for="">Status</label>
+                        <label>Status</label>
                         <select name="status" class="form-control form-control-lg">
                             <option value="0" selected>On away a pick up</option>
                             <option value="1">At pick up</option>
@@ -135,7 +149,7 @@
                     </div>
                     {{-- status --}}
                     <div class="form-group">
-                        <label for="">Signed by</label>
+                        <label>Signed by</label>
                         <input type="text" name="pod"
                                class="form-control form-control-lg"
                                placeholder="Signed by">
@@ -149,14 +163,35 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/zepto.min.js') }}"></script>
     <script>
-        var date = new Date();
-        flatpickr(".js-date-picker", {
-            enableTime: true,
-            dateFormat: "m-d-Y H:i",
-            defaultHour: date.getHours(),
-            defaultMinute: date.getMinutes(),
+        initDatePicker(".js-date-picker");
+
+        $('button#add_freight_loaded_btn').on('click', function () {
+            $('div#freight_loaded_container').append(
+                '                       <div class="card card-body">\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Freight loaded</label>\n' +
+                '                                <input type="text" name="freight_loads[]"\n' +
+                '                                       class="form-control form-control-lg autocomplete"\n' +
+                '                                       placeholder="Freight loaded">\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Freight loaded date</label>\n' +
+                '                                <input type="text" name="freight_loaded_dates[]"\n' +
+                '                                       class="form-control form-control-lg js-date-picker2"\n' +
+                '                                       placeholder="Freight loaded date">\n' +
+                '                            </div>\n' +
+                '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
+                '                        </div>');
+            initAutocomplete();
+            initDatePicker(".js-date-picker2");
         });
+
+        $(document).on('click', 'button.delete_btn', function () {
+            $(this).parent().remove();
+        });
+
 
         function initAutocomplete() {
             var options = {
@@ -164,24 +199,21 @@
                 componentRestrictions: {country: "us"}
             };
 
-            new google.maps.places.Autocomplete(
-                (document.getElementById('from')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('to')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('at_origin')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('freight_loaded')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('current_location')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('at_distination')),
-                options);
+            var input = document.getElementsByClassName('autocomplete');
+
+            for (i = 0; i < input.length; i++) {
+                autocomplete = new google.maps.places.Autocomplete(input[i], options);
+            }
+        }
+
+        function initDatePicker(element) {
+            var date = new Date();
+            flatpickr(element, {
+                enableTime: true,
+                dateFormat: "m-d-Y H:i",
+                defaultHour: date.getHours(),
+                defaultMinute: date.getMinutes(),
+            });
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=en&callback=initAutocomplete"

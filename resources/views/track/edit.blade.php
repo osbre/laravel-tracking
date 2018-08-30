@@ -32,13 +32,15 @@
                     {{-- from --}}
                     <div class="form-group">
                         <label for="">From</label>
-                        <input type="text" name="from" class="form-control form-control-lg" placeholder="From" required
+                        <input type="text" name="from" class="form-control form-control-lg autocomplete"
+                               placeholder="From" required
                                id="from" value="{{ $track->from }}">
                     </div>
                     {{-- to --}}
                     <div class="form-group" id="locationField">
                         <label for="">To</label>
-                        <input type="text" name="to" class="form-control form-control-lg" placeholder="To" required
+                        <input type="text" name="to" class="form-control form-control-lg autocomplete" placeholder="To"
+                               required
                                id="to" value="{{ $track->to }}">
                     </div>
                     {{-- dims --}}
@@ -66,8 +68,8 @@
                     {{-- at_origin --}}
                     <div class="form-group">
                         <label for="">Origin</label>
-                        <input type="text" name="at_origin" id="at_origin"
-                               class="form-control form-control-lg"
+                        <input type="text" name="at_origin"
+                               class="form-control form-control-lg autocomplete"
                                placeholder="Origin" value="{{ $track->at_origin }}">
                     </div>
                     {{-- at_origin_date --}}
@@ -78,26 +80,41 @@
                                placeholder="Origin date"
                                value="{{ $track->at_origin_date ? $track->at_origin_date->format('m-d-Y H:i') : '' }}">
                     </div>
-                    {{-- freight_loaded --}}
-                    <div class="form-group">
-                        <label for="">Freight loaded</label>
-                        <input type="text" name="freight_loaded"
-                               class="form-control form-control-lg"
-                               placeholder="Freight loaded" id="freight_loaded" value="{{ $track->freight_loaded }}">
-                    </div>
-                    {{-- freight_loaded_date --}}
-                    <div class="form-group">
-                        <label for="">Freight loaded date</label>
-                        <input type="text" name="freight_loaded_date"
-                               class="form-control form-control-lg js-date-picker"
-                               placeholder="Freight loaded date"
-                               value="{{ $track->freight_loaded_date ? $track->freight_loaded_date->format('m-d-Y H:i') : '' }}">
+                    {{-- freight_loaded list--}}
+                    <div id="freight_loaded_container">
+                        <label>
+                            <h3>
+                                Freight loaded
+                            </h3>
+                        </label>
+                        <button type="button" class="btn btn-success btn-block" id="add_freight_loaded_btn">Add freight
+                            loaded
+                        </button>
+                        @foreach($track->locations as $location)
+                            <div class="card card-body">
+                                {{-- freight_loaded--}}
+                                <div class="form-group">
+                                    <label>Freight loaded</label>
+                                    <input type="text" name="freight_loads[]"
+                                           class="form-control form-control-lg autocomplete"
+                                           placeholder="Freight loaded" value="{{ $location->value }}">
+                                </div>
+                                {{-- freight_loaded_date --}}
+                                <div class="form-group">
+                                    <label>Freight loaded date</label>
+                                    <input type="text" name="freight_loaded_dates[]"
+                                           class="form-control form-control-lg js-date-picker"
+                                           placeholder="Freight loaded date" value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
+                                </div>
+                                <button type="button" class="btn btn-danger delete_btn">DELETE</button>
+                            </div>
+                        @endforeach
                     </div>
                     {{-- current_location --}}
                     <div class="form-group">
                         <label for="">Current location</label>
-                        <input type="text" name="current_location" id="current_location"
-                               class="form-control form-control-lg"
+                        <input type="text" name="current_location"
+                               class="form-control form-control-lg autocomplete"
                                placeholder="Current location" value="{{ $track->current_location }}">
                     </div>
                     {{-- current_location_date --}}
@@ -112,8 +129,8 @@
                     <div class="form-group">
                         <label for="">Distination</label>
                         <input type="text" name="at_distination"
-                               class="form-control form-control-lg"
-                               placeholder="Distination" id="at_distination" value="{{ $track->at_distination }}">
+                               class="form-control form-control-lg autocomplete"
+                               placeholder="Distination" value="{{ $track->at_distination }}">
                     </div>
                     {{-- at_distination_date --}}
                     <div class="form-group">
@@ -155,17 +172,41 @@
                     </div>
                 </form>
             </div>
+            <!--<div class="col-md-6">
+                111
+            </div>-->
         </div>
     </div>
 
+    <script src="{{ asset('js/zepto.min.js') }}"></script>
     <script>
-        var date = new Date();
-        flatpickr(".js-date-picker", {
-            enableTime: true,
-            dateFormat: "m-d-Y H:i",
-            defaultHour: date.getHours(),
-            defaultMinute: date.getMinutes(),
+        initDatePicker(".js-date-picker");
+
+        $('button#add_freight_loaded_btn').on('click', function () {
+            $('div#freight_loaded_container').append(
+                '                       <div class="card card-body">\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Freight loaded</label>\n' +
+                '                                <input type="text" name="freight_loads[]"\n' +
+                '                                       class="form-control form-control-lg autocomplete"\n' +
+                '                                       placeholder="Freight loaded">\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Freight loaded date</label>\n' +
+                '                                <input type="text" name="freight_loaded_dates[]"\n' +
+                '                                       class="form-control form-control-lg js-date-picker2"\n' +
+                '                                       placeholder="Freight loaded date">\n' +
+                '                            </div>\n' +
+                '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
+                '                        </div>');
+            initAutocomplete();
+            initDatePicker(".js-date-picker2");
         });
+
+        $(document).on('click', 'button.delete_btn', function () {
+            $(this).parent().remove();
+        });
+
 
         function initAutocomplete() {
             var options = {
@@ -173,26 +214,22 @@
                 componentRestrictions: {country: "us"}
             };
 
-            new google.maps.places.Autocomplete(
-                (document.getElementById('from')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('to')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('at_origin')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('freight_loaded')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('current_location')),
-                options);
-            new google.maps.places.Autocomplete(
-                (document.getElementById('at_distination')),
-                options);
+            var input = document.getElementsByClassName('autocomplete');
+
+            for (i = 0; i < input.length; i++) {
+                autocomplete = new google.maps.places.Autocomplete(input[i], options);
+            }
         }
 
+        function initDatePicker(element) {
+            var date = new Date();
+            flatpickr(element, {
+                enableTime: true,
+                dateFormat: "m-d-Y H:i",
+                defaultHour: date.getHours(),
+                defaultMinute: date.getMinutes(),
+            });
+        }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=en&callback=initAutocomplete"
             async defer></script>

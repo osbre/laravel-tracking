@@ -37,8 +37,15 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        Track::create($request->all());
+        $track = Track::create($request->all());
 
+        foreach ($request->freight_loads as $key => $freight_load) {
+            $locations[$key]['value'] = $freight_load;
+            $locations[$key]['type'] = 'freight_loaded';
+            $locations[$key]['date'] = $request->freight_loaded_dates[$key];
+        }
+
+        $track->locations()->createMany($locations);
 
         return redirect()->route('tracks.index');
     }
@@ -74,6 +81,10 @@ class TrackController extends Controller
 
         $api = json_decode($output);
 
+        $miles = floatval($api->routes[0]->legs[0]->distance->text);
+        //$time = sprintf('%02d hours %02d minutes', (int) $miles, fmod($miles, 1) * 60);
+//dd($miles);
+        //todo - go to messenger, an read solution
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
 
@@ -110,6 +121,15 @@ class TrackController extends Controller
     {
         $track->update($request->all());
 
+        foreach ($request->freight_loads as $key => $freight_load) {
+            $locations[$key]['value'] = $freight_load;
+            $locations[$key]['type'] = 'freight_loaded';
+            $locations[$key]['date'] = $request->freight_loaded_dates[$key];
+        }
+
+        $track->locations()->delete();
+        $track->locations()->createMany($locations);
+
         return redirect()->route('tracks.index');
     }
 
@@ -121,6 +141,7 @@ class TrackController extends Controller
      */
     public function destroy(Track $track)
     {
+        $track->locations()->delete();
         $track->delete();
         return redirect()->route('tracks.index');
     }

@@ -30,9 +30,6 @@ class CreateTracksTable extends Migration
             $table->string('at_origin')->nullable();
             $table->dateTime('at_origin_date')->nullable();
 
-            $table->string('freight_loaded')->nullable();
-            $table->dateTime('freight_loaded_date')->nullable();
-
             $table->string('current_location')->nullable();
             $table->dateTime('current_location_date')->nullable();
 
