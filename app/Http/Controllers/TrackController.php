@@ -104,11 +104,6 @@ class TrackController extends Controller
 
         $api = json_decode($output);
 
-        $miles = floatval($api->routes[0]->legs[0]->distance->text);
-        //O_O, not write comments like below
-        //$time = sprintf('%02d hours %02d minutes', (int) $miles, fmod($miles, 1) * 60);
-//dd($miles);
-        //todo - go to messenger, an read solution
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
 
@@ -147,8 +142,8 @@ class TrackController extends Controller
 
         $locations = collect();
 
-        if (!empty($request->freight_loads)) {
-            foreach ($request->freight_loads as $key => $freight_load) {
+        foreach ($request->freight_loads as $key => $freight_load) {
+            if (!empty($freight_load)) {
                 $locations->push([
                     'value' => $freight_load,
                     'type' => 'freight_loaded',
@@ -156,8 +151,9 @@ class TrackController extends Controller
                 ]);
             }
         }
-        if (!empty($request->destinations)) {
-            foreach ($request->destinations as $key => $destination) {
+
+        foreach ($request->destinations as $key => $destination) {
+            if (!empty($destination)) {
                 $locations->push([
                     'value' => $destination,
                     'type' => 'destination',
@@ -166,7 +162,7 @@ class TrackController extends Controller
             }
         }
 
-        if (!empty($request->destinations) || !empty($request->destinations)) {
+        if ($locations->isNotEmpty()) {
             $track->locations()->delete();
             $track->locations()->createMany($locations->toArray());
         }
