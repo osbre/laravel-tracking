@@ -82,32 +82,31 @@
                     </div>
                     {{-- freight_loaded list--}}
                     <div id="freight_loaded_container">
-                        <label>
-                            <h3>
-                                Freight loaded
-                            </h3>
-                        </label>
+                        <h3>Freight loaded </h3>
                         <button type="button" class="btn btn-success btn-block" id="add_freight_loaded_btn">Add freight
                             loaded
                         </button>
                         @foreach($track->locations as $location)
-                            <div class="card card-body">
-                                {{-- freight_loaded--}}
-                                <div class="form-group">
-                                    <label>Freight loaded</label>
-                                    <input type="text" name="freight_loads[]"
-                                           class="form-control form-control-lg autocomplete"
-                                           placeholder="Freight loaded" value="{{ $location->value }}">
+                            @if($location->type == "freight_loaded")
+                                <div class="card card-body">
+                                    {{-- freight_loaded--}}
+                                    <div class="form-group">
+                                        <label>Freight loaded</label>
+                                        <input type="text" name="freight_loads[]"
+                                               class="form-control form-control-lg autocomplete"
+                                               placeholder="Freight loaded" value="{{ $location->value }}">
+                                    </div>
+                                    {{-- freight_loaded_date --}}
+                                    <div class="form-group">
+                                        <label>Freight loaded date</label>
+                                        <input type="text" name="freight_loaded_dates[]"
+                                               class="form-control form-control-lg js-date-picker"
+                                               placeholder="Freight loaded date"
+                                               value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
+                                    </div>
+                                    <button type="button" class="btn btn-danger delete_btn">DELETE</button>
                                 </div>
-                                {{-- freight_loaded_date --}}
-                                <div class="form-group">
-                                    <label>Freight loaded date</label>
-                                    <input type="text" name="freight_loaded_dates[]"
-                                           class="form-control form-control-lg js-date-picker"
-                                           placeholder="Freight loaded date" value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
-                                </div>
-                                <button type="button" class="btn btn-danger delete_btn">DELETE</button>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
                     {{-- current_location --}}

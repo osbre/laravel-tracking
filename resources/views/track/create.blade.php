@@ -74,11 +74,7 @@
                     </div>
                     {{-- freight_loaded list--}}
                     <div id="freight_loaded_container">
-                        <label>
-                            <h3>
-                                Freight loaded
-                            </h3>
-                        </label>
+                        <h3>Freight loaded </h3>
                         <button type="button" class="btn btn-success btn-block" id="add_freight_loaded_btn">Add freight
                             loaded
                         </button>
