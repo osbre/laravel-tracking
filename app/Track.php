@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Track extends Model
 {
-    protected $fillable = ['code', 'from', 'to', 'load_pc', 'load_lbs', 'dims', 'at_origin', 'at_origin_date', 'current_location', 'current_location_date', 'at_distination', 'at_distination_date', 'delivered', 'status', 'pod'];
+    protected $fillable = ['code', 'from', 'to', 'load_pc', 'load_lbs', 'dims', 'at_origin', 'at_origin_date', 'current_location', 'current_location_date', 'delivered', 'status', 'pod'];
 
     protected $dates = ['at_origin_date', 'current_location_date', 'at_distination_date', 'delivered'];
 
@@ -25,13 +25,6 @@ class Track extends Model
         }
     }
 
-    public function setAtDistinationDateAttribute($value)
-    {
-        if (!empty($value)) {
-            $this->attributes['at_distination_date'] = Carbon::createFromFormat('m-d-Y H:i', $value);
-        }
-    }
-
     public function setDeliveredAttribute($value)
     {
         if (!empty($value)) {
@@ -41,7 +34,7 @@ class Track extends Model
 
     /**
      * Check, is now user must update track (user must update track every two hours)
-     * @return mixed
+     * @return boolean
      */
     public function getIsUpdateExpiredAttribute()
     {

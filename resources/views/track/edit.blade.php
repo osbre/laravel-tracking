@@ -124,20 +124,33 @@
                                placeholder="Current location date"
                                value="{{ $track->current_location_date ? $track->current_location_date->format('m-d-Y H:i') : '' }}">
                     </div>
-                    {{-- at_distination --}}
-                    <div class="form-group">
-                        <label for="">Distination</label>
-                        <input type="text" name="at_distination"
-                               class="form-control form-control-lg autocomplete"
-                               placeholder="Distination" value="{{ $track->at_distination }}">
-                    </div>
-                    {{-- at_distination_date --}}
-                    <div class="form-group">
-                        <label for="">Distination date</label>
-                        <input type="text" name="at_distination_date"
-                               class="form-control form-control-lg js-date-picker"
-                               placeholder="Distination date"
-                               value="{{ $track->at_distination_date ? $track->at_distination_date->format('m-d-Y H:i') : '' }}">
+                    {{-- destinations list--}}
+                    <div id="destination_container">
+                        <h3>Destinations</h3>
+                        <button type="button" class="btn btn-success btn-block" id="add_destination_btn">
+                            Add Destination
+                        </button>
+                        @foreach($track->locations as $location)
+                            @if($location->type == "destination")
+                                <div class="card card-body">
+                                    {{-- destination--}}
+                                    <div class="form-group">
+                                        <label>Destination</label>
+                                        <input type="text" name="destinations[]"
+                                               class="form-control form-control-lg autocomplete"
+                                               placeholder="Destination" value="{{ $location->value }}">
+                                    </div>
+                                    {{-- destination_date --}}
+                                    <div class="form-group">
+                                        <label>Destination date</label>
+                                        <input type="text" name="destination_dates[]"
+                                               class="form-control form-control-lg js-date-picker"
+                                               placeholder="Destination date" value="{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}">
+                                    </div>
+                                    <button type="button" class="btn btn-danger delete_btn">DELETE</button>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                     {{-- delivered --}}
                     <div class="form-group">
@@ -177,13 +190,14 @@
         </div>
     </div>
 
+
     <script src="{{ asset('js/zepto.min.js') }}"></script>
     <script>
         initDatePicker(".js-date-picker");
 
         $('button#add_freight_loaded_btn').on('click', function () {
             $('div#freight_loaded_container').append(
-                '                       <div class="card card-body">\n' +
+                '                        <div class="card card-body">\n' +
                 '                            <div class="form-group">\n' +
                 '                                <label>Freight loaded</label>\n' +
                 '                                <input type="text" name="freight_loads[]"\n' +
@@ -195,6 +209,27 @@
                 '                                <input type="text" name="freight_loaded_dates[]"\n' +
                 '                                       class="form-control form-control-lg js-date-picker2"\n' +
                 '                                       placeholder="Freight loaded date">\n' +
+                '                            </div>\n' +
+                '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
+                '                        </div>');
+            initAutocomplete();
+            initDatePicker(".js-date-picker2");
+        });
+
+        $('button#add_destination_btn').on('click', function () {
+            $('div#destination_container').append(
+                '                        <div class="card card-body">\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Destination</label>\n' +
+                '                                <input type="text" name="destinations[]"\n' +
+                '                                       class="form-control form-control-lg autocomplete"\n' +
+                '                                       placeholder="Destination">\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label>Destination date</label>\n' +
+                '                                <input type="text" name="destination_dates[]"\n' +
+                '                                       class="form-control form-control-lg js-date-picker2"\n' +
+                '                                       placeholder="Destination date">\n' +
                 '                            </div>\n' +
                 '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
                 '                        </div>');

@@ -39,13 +39,25 @@ class TrackController extends Controller
     {
         $track = Track::create($request->all());
 
+
+        $locations = collect();
+
         foreach ($request->freight_loads as $key => $freight_load) {
-            $locations[$key]['value'] = $freight_load;
-            $locations[$key]['type'] = 'freight_loaded';
-            $locations[$key]['date'] = $request->freight_loaded_dates[$key];
+            $locations->push([
+                'value' => $freight_load,
+                'type' => 'freight_loaded',
+                'date' => $request->freight_loaded_dates[$key]
+            ]);
+        }
+        foreach ($request->destinations as $key => $destination) {
+            $locations->push([
+                'value' => $destination,
+                'type' => 'destination',
+                'date' => $request->destination_dates[$key]
+            ]);
         }
 
-        $track->locations()->createMany($locations);
+        $track->locations()->createMany($locations->toArray());
 
         return redirect()->route('tracks.index');
     }
@@ -121,14 +133,25 @@ class TrackController extends Controller
     {
         $track->update($request->all());
 
+        $locations = collect();
+
         foreach ($request->freight_loads as $key => $freight_load) {
-            $locations[$key]['value'] = $freight_load;
-            $locations[$key]['type'] = 'freight_loaded';
-            $locations[$key]['date'] = $request->freight_loaded_dates[$key];
+            $locations->push([
+                'value' => $freight_load,
+                'type' => 'freight_loaded',
+                'date' => $request->freight_loaded_dates[$key]
+            ]);
+        }
+        foreach ($request->destinations as $key => $destination) {
+            $locations->push([
+                'value' => $destination,
+                'type' => 'destination',
+                'date' => $request->destination_dates[$key]
+            ]);
         }
 
         $track->locations()->delete();
-        $track->locations()->createMany($locations);
+        $track->locations()->createMany($locations->toArray());
 
         return redirect()->route('tracks.index');
     }

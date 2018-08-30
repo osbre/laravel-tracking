@@ -17,7 +17,7 @@
             <table class="table table-bordered table-responsive-lg table-striped">
                 <thead>
                 <tr>
-                    <th>Time to update</th>
+                    <th>Last update</th>
                     <th>code</th>
                     <th>from</th>
                     <th>to</th>
