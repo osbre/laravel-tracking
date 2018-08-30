@@ -142,8 +142,8 @@ class TrackController extends Controller
 
         $locations = collect();
 
-        foreach ($request->freight_loads as $key => $freight_load) {
-            if (!empty($freight_load)) {
+        if (!empty($request->freight_loads)) {
+            foreach ($request->freight_loads as $key => $freight_load) {
                 $locations->push([
                     'value' => $freight_load,
                     'type' => 'freight_loaded',
@@ -151,9 +151,8 @@ class TrackController extends Controller
                 ]);
             }
         }
-
-        foreach ($request->destinations as $key => $destination) {
-            if (!empty($destination)) {
+        if (!empty($request->destinations)) {
+            foreach ($request->destinations as $key => $destination) {
                 $locations->push([
                     'value' => $destination,
                     'type' => 'destination',
@@ -162,7 +161,7 @@ class TrackController extends Controller
             }
         }
 
-        if ($locations->isNotEmpty()) {
+        if (!empty($request->freight_loads) || !empty($request->destinations)) {
             $track->locations()->delete();
             $track->locations()->createMany($locations->toArray());
         }
