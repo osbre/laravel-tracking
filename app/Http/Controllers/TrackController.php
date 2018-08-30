@@ -82,8 +82,8 @@ class TrackController extends Controller
         $track = Track::where('code', $request->code)->firstOrFail();
 
         $destinations = $track->locations()->where('type', 'destination')->get();
-        $freight_loads = $track->locations()->where('type', 'destination')->get();
-        if (!empty($destinations)) {
+        $freight_loads = $track->locations()->where('type', 'freight_loaded')->get();
+        if ($destinations->isNotEmpty()) {
             $from = $destinations->last()->value;
         } elseif (!empty($track->current_location)) {
             $from = $track->current_location;
@@ -104,6 +104,11 @@ class TrackController extends Controller
 
         $api = json_decode($output);
 
+        $miles = floatval($api->routes[0]->legs[0]->distance->text);
+        //O_O, not write comments like below
+        //$time = sprintf('%02d hours %02d minutes', (int) $miles, fmod($miles, 1) * 60);
+//dd($miles);
+        //todo - go to messenger, an read solution
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
 
