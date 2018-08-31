@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    protected $fillable = ['value', 'type', 'date'];
+    protected $fillable = ['value', 'type', 'track_id', 'date'];
 
     public $dates = ['date'];
 
     const UPDATED_AT = null;//disable updated_at field
+
+    protected $touches = ['track'];
 
     public function setDateAttribute($value)
     {
@@ -22,6 +24,6 @@ class Location extends Model
 
     public function track()
     {
-        return $this->hasOne('App\Location');
+        return $this->belongsTo('App\Track');
     }
 }

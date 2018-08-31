@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Location;
 use App\Track;
 use Illuminate\Http\Request;
 
@@ -155,8 +154,6 @@ class TrackController extends Controller
         $end['lat'] = $api->routes[0]->legs[0]->end_location->lat;
         $end['lng'] = $api->routes[0]->legs[0]->end_location->lng;
 
-        /*$distance = $api->routes[0]->legs[0]->distance->text;
-        $duration['text'] = $api->routes[0]->legs[0]->duration->text;*/
         $duration['value'] = $api->routes[0]->legs[0]->duration->value;
 
         return view('track.edit', ['track' => $track, 'start' => $start, 'end' => $end, 'duration' => $duration]);
