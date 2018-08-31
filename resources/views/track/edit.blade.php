@@ -185,9 +185,9 @@
                     </div>
                 </form>
             </div>
-            <!--<div class="col-md-6">
-                111
-            </div>-->
+            <div class="col-md-6" id="map" style="width:100%; height:1500px;">
+
+            </div>
         </div>
     </div>
 
@@ -254,6 +254,8 @@
             for (i = 0; i < input.length; i++) {
                 autocomplete = new google.maps.places.Autocomplete(input[i], options);
             }
+
+            initMap();
         }
 
         function initDatePicker(element) {
@@ -264,6 +266,73 @@
                 defaultHour: date.getHours(),
                 defaultMinute: date.getMinutes(),
             });
+        }
+
+        function initMap() {
+            var marker = false;
+            var fullTime = {{ $duration['value'] }};
+            var pathTime = 0;
+
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                //center: new google.maps.LatLng(39.31252574424125, -100.65206356448482),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            var directionsService = new google.maps.DirectionsService();
+            directionsDisplay.setOptions({suppressMarkers: true, suppressInfoWindows: true});
+            directionsDisplay.setMap(map);
+            var request = {
+                origin: new google.maps.LatLng({{ $start['lat'] }}, {{ $start['lng'] }}),
+                destination: new google.maps.LatLng({{ $end['lat'] }}, {{ $end['lng'] }}),
+                travelMode: google.maps.DirectionsTravelMode.DRIVING
+            };
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    updateMarker(response.routes[0].legs[0], 0);
+                    /*setInterval(function () {
+                        updateMarker(response.routes[0].legs[0], 5);
+                    }, 5000);*/
+                    console.log(response);
+                }
+            });
+
+            function updateMarker(legs, delta) {
+                if (marker) marker.setMap(null);
+                var markerIcon = '{{ asset('img/auto.png') }}';
+                if (pathTime + delta > 0) pathTime = pathTime + delta;
+                else {
+                    marker = new google.maps.Marker({position: legs.steps[0].lat_lngs[0], map: map});
+                    marker.setIcon(markerIcon);
+                    return;
+                }
+                if (pathTime > fullTime) pathTime = fullTime;
+                var points = getDirectionPoints(legs);
+                var countPoints = 0;
+                for (i = 0; i < points.length; i++) countPoints = countPoints + points[i];
+                var curentPoint = parseInt(pathTime * countPoints / fullTime);
+                var step = getStep(points, curentPoint);
+                marker = new google.maps.Marker({position: legs.steps[step[0]].lat_lngs[step[1] - 1], map: map});
+                marker.setIcon(markerIcon);
+            }
+
+            function getStep(points, curentPoint) {
+                for (var i = 0; i < points.length; i++) {
+                    curentPoint = curentPoint - points[i];
+                    if (curentPoint <= 0) return [i, curentPoint + points[i]];
+                }
+            }
+
+            function getDirectionPoints(data) {
+                var points = [];
+                for (var i = 0; i < data.steps.length; i++) {
+                    if (data.steps[i].lat_lngs) {
+                        points.push(data.steps[i].lat_lngs.length);
+                    }
+                }
+                return points;
+            }
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=en&callback=initAutocomplete"

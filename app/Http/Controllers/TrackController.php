@@ -126,7 +126,40 @@ class TrackController extends Controller
      */
     public function edit(Track $track)
     {
-        return view('track.edit', ['track' => $track]);
+        $destinations = $track->locations()->where('type', 'destination')->get();
+        $freight_loads = $track->locations()->where('type', 'freight_loaded')->get();
+        if (!$destinations->isEmpty()) {
+            $from = $destinations->last()->value;
+        } elseif (!empty($track->current_location)) {
+            $from = $track->current_location;
+        } elseif (!$freight_loads->isEmpty()) {
+            $from = $freight_loads->last()->value;
+        } elseif (!empty($track->at_origin)) {
+            $from = $track->at_origin;
+        } elseif (!empty($track->from)) {
+            $from = $track->from;
+        }
+
+        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        $api = json_decode($output);
+
+        $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
+        $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
+
+        $end['lat'] = $api->routes[0]->legs[0]->end_location->lat;
+        $end['lng'] = $api->routes[0]->legs[0]->end_location->lng;
+
+        /*$distance = $api->routes[0]->legs[0]->distance->text;
+        $duration['text'] = $api->routes[0]->legs[0]->duration->text;*/
+        $duration['value'] = $api->routes[0]->legs[0]->duration->value;
+
+        return view('track.edit', ['track' => $track, 'start' => $start, 'end' => $end, 'duration' => $duration]);
     }
 
     /**
