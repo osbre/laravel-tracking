@@ -62,15 +62,19 @@
                 @if(!empty($track->at_origin))
                     <li class="list-group-item">
                         At origin:
-                        <br><b>{{ $track->at_origin }}</b>
+                        <br><b c>{{ $track->at_origin }}</b>
                         <br><b>{{ $track->at_origin_date->format('m-d-Y H:i') }}</b>
                     </li>
                 @endif
-                @if(!empty($track->freight_loaded))
+                @if(!empty($track->locations->where('type', 'freight_loaded')))
                     <li class="list-group-item">
                         Freight loaded:
-                        <br><b>{{ $track->freight_loaded }}</b>
-                        <br><b>{{ $track->freight_loaded_date ? $track->freight_loaded_date->format('m-d-Y H:i') : '' }}</b>
+                        @foreach($track->locations->where('type', 'freight_loaded') as $location)
+                            <br>
+                            <b class="text-info">{{ $location->value }}</b>
+                            <br>
+                            <b class="text-success">{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}</b>
+                        @endforeach
                     </li>
                 @endif
                 @if(!empty($track->current_location))
@@ -81,12 +85,15 @@
 
                     </li>
                 @endif
-                @if(!empty($track->at_distination))
+                @if(!empty($track->locations->where('type', 'destination')))
                     <li class="list-group-item">
-                        At distination:
-                        <br><b>{{ $track->at_distination }}</b>
-                        <br><b>{{ $track->at_distination_date ? $track->at_distination_date->format('m-d-Y H:i') : '' }}</b>
-
+                        At destination:
+                        @foreach($track->locations->where('type', 'destination') as $location)
+                            <br>
+                            <b class="text-info">{{ $location->value }}</b>
+                            <br>
+                            <b class="text-success">{{ $location->date ? $location->date->format('m-d-Y H:i') : '' }}</b>
+                        @endforeach
                     </li>
                 @endif
 
