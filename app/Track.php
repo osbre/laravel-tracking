@@ -47,4 +47,52 @@ class Track extends Model
     {
         return $this->hasMany('App\Location');
     }
+
+    public function photos()
+    {
+        return $this->hasMany('App\Photo');
+    }
+
+    public function getFromValueAttribute()
+    {
+        $destinations = $this->locations()->where('type', 'destination')->get();
+        $freight_loads = $this->locations()->where('type', 'freight_loaded')->get();
+        if (!$destinations->isEmpty()) {
+            $from = $destinations->last()->value;
+        } elseif (!empty($this->current_location)) {
+            $from = $this->current_location;
+        } elseif (!$freight_loads->isEmpty()) {
+            $from = $freight_loads->last()->value;
+        } elseif (!empty($this->at_origin)) {
+            $from = $this->at_origin;
+        } elseif (!empty($this->from)) {
+            $from = $this->from;
+        }
+
+        return $from;
+    }
+
+    public function insertPhotos($request)
+    {
+        if ($request->hasFile('photos')) {
+            $allowedFileExtension = ['jpeg', 'jpg', 'png'];
+            $files = $request->file('photos');
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+
+                $check = in_array($extension, $allowedFileExtension);
+
+                if ($check) {
+
+                    foreach ($request->photos as $photo) {
+                        $filename = $photo->store('public/photos');
+
+                        $this->photos()->create([
+                            'filename' => $filename
+                        ]);
+                    }
+                }
+            }
+        }
+    }
 }

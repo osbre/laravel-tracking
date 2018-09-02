@@ -13,7 +13,7 @@
     <div class="container-fluid h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                <form action="{{ route('tracks.store') }}" method="post">
+                <form action="{{ route('tracks.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="btn-group d-flex" role="group">
                         <a href="{{ route('tracks.index') }}" class="btn btn-warning w-100">Back</a>
@@ -160,8 +160,23 @@
                                class="form-control form-control-lg"
                                placeholder="Signed by">
                     </div>
-
-                    <div class="form-group">
+                    <h4 class="text-info">Photos</h4>
+                    <div class="alert alert-info" role="alert">
+                        <b>Note:</b> File size is no more than 1 MB.
+                    </div>
+                    <div id="photos_container">
+                        <button type="button" class="btn btn-success btn-block" id="add_photo_btn">Add photo</button>
+                        <div class="card card-body">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photos[]">
+                                    <label class="custom-file-label">Choose file</label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>
+                        </div>
+                    </div>
+                    <div class="form-group pt-3">
                         <input type="submit" class="btn btn-info btn-lg btn-block" value="Add">
                     </div>
                 </form>
@@ -213,6 +228,19 @@
                 '                        </div>');
             initAutocomplete();
             initDatePicker(".js-date-picker2");
+        });
+
+        $('button#add_photo_btn').on('click', function () {
+            $('div#photos_container').append(
+                '                        <div class="card card-body">\n' +
+                '                            <div class="input-group">\n' +
+                '                                <div class="custom-file">\n' +
+                '                                    <input type="file" class="custom-file-input" name="photos[]">\n' +
+                '                                    <label class="custom-file-label">Choose file</label>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
+                '                        </div>');
         });
 
         $(document).on('click', 'button.delete_btn', function () {

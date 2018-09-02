@@ -11,9 +11,10 @@
 
 @section('content')
     <div class="container-fluid h-100">
-        <div class="row justify-content-center align-items-center h-100">
+        <div class="row justify-content-center h-100">
             <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                <form action="{{ route('tracks.update', ['track' => $track]) }}" method="post">
+                <form action="{{ route('tracks.update', ['track' => $track]) }}" method="post"
+                      enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="btn-group d-flex" role="group">
@@ -180,7 +181,21 @@
                                placeholder="Signed by" value="{{ $track->pod }}">
                     </div>
 
-                    <div class="form-group">
+                    <h4 class="text-info">Photos</h4>
+                    <div class="alert alert-info" role="alert">
+                        <b>Note:</b> File size is no more than 1 MB.
+                    </div>
+                    <div id="photos_container">
+                        <button type="button" class="btn btn-success btn-block" id="add_photo_btn">Add photo</button>
+                        @foreach($track->photos()->get() as $photo)
+                            <div class="card card-body">
+                                <img src="{{ Storage::url($photo->filename) }}" width="100%">
+                                <input type="hidden" name="exits_photos_ids[]" value="{{ $photo->id }}">
+                                <button type="button" class="btn btn-danger delete_btn">DELETE</button>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="form-group pt-3">
                         <input type="submit" class="btn btn-info btn-lg btn-block" value="Edit">
                     </div>
                 </form>
@@ -236,6 +251,19 @@
                 '                        </div>');
             initAutocomplete();
             initDatePicker(".js-date-picker2");
+        });
+
+        $('button#add_photo_btn').on('click', function () {
+            $('div#photos_container').append(
+                '                        <div class="card card-body">\n' +
+                '                            <div class="input-group">\n' +
+                '                                <div class="custom-file">\n' +
+                '                                    <input type="file" class="custom-file-input" name="photos[]">\n' +
+                '                                    <label class="custom-file-label">Choose file</label>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                            <button type="button" class="btn btn-danger delete_btn">DELETE</button>\n' +
+                '                        </div>');
         });
 
         $(document).on('click', 'button.delete_btn', function () {

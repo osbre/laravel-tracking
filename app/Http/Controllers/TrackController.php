@@ -67,6 +67,8 @@ class TrackController extends Controller
             $track->locations()->createMany($locations->toArray());
         }
 
+        $track->insertPhotos($request);
+
         return redirect()->route('tracks.index');
     }
 
@@ -80,21 +82,7 @@ class TrackController extends Controller
     {
         $track = Track::where('code', $request->code)->firstOrFail();
 
-        $destinations = $track->locations()->where('type', 'destination')->get();
-        $freight_loads = $track->locations()->where('type', 'freight_loaded')->get();
-        if (!$destinations->isEmpty()) {
-            $from = $destinations->last()->value;
-        } elseif (!empty($track->current_location)) {
-            $from = $track->current_location;
-        } elseif (!$freight_loads->isEmpty()) {
-            $from = $freight_loads->last()->value;
-        } elseif (!empty($track->at_origin)) {
-            $from = $track->at_origin;
-        } elseif (!empty($track->from)) {
-            $from = $track->from;
-        }
-
-        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
+        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from_value . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -125,21 +113,7 @@ class TrackController extends Controller
      */
     public function edit(Track $track)
     {
-        $destinations = $track->locations()->where('type', 'destination')->get();
-        $freight_loads = $track->locations()->where('type', 'freight_loaded')->get();
-        if (!$destinations->isEmpty()) {
-            $from = $destinations->last()->value;
-        } elseif (!empty($track->current_location)) {
-            $from = $track->current_location;
-        } elseif (!$freight_loads->isEmpty()) {
-            $from = $freight_loads->last()->value;
-        } elseif (!empty($track->at_origin)) {
-            $from = $track->at_origin;
-        } elseif (!empty($track->from)) {
-            $from = $track->from;
-        }
-
-        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
+        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from_value . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -196,6 +170,20 @@ class TrackController extends Controller
             $track->locations()->createMany($locations->toArray());
         }
 
+        //deleting photos
+        $photos = $track->photos()->pluck('id')->toArray();
+        $exits_photos = $request->exits_photos_ids;
+
+        if (!empty($request->exits_photos_ids)) {
+            if (count($exits_photos) != count($photos)) {//if some photos deleted
+                $track->photos()->whereNotIn('id', $exits_photos)->delete();
+            }
+        } else {//if all photos deleted
+            $track->photos()->delete();
+        }
+        //adding photos
+        $track->insertPhotos($request);
+
         return redirect()->route('tracks.index');
     }
 
@@ -208,6 +196,7 @@ class TrackController extends Controller
     public function destroy(Track $track)
     {
         $track->locations()->delete();
+        $track->photos()->delete();
         $track->delete();
         return redirect()->route('tracks.index');
     }
