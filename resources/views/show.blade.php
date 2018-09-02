@@ -151,7 +151,9 @@
             @foreach($track->photos()->get() as $photo)
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="{{ Storage::url($photo->filename) }}" width="100%" class="card-img-top">
+                        <a href="{{ Storage::url($photo->filename) }}">
+                            <img src="{{ Storage::url($photo->filename) }}" width="100%" class="card-img-top">
+                        </a>
                     </div>
                 </div>
             @endforeach
