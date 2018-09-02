@@ -83,7 +83,6 @@ class Track extends Model
                 $check = in_array($extension, $allowedFileExtension);
 
                 if ($check) {
-
                     $filename = $file->store('public/photos');
 
                     $this->photos()->create([

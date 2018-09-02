@@ -137,6 +137,18 @@
         <div class="row">
             <div id="map" class="col-lg-12" style="width:100%; height:600px;"></div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Photos</h3>
+            </div>
+            @foreach($track->photos()->get() as $photo)
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ Storage::url($photo->filename) }}" width="100%" class="card-img-top">
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
     <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=en-AU&key={{ env('GOOGLE_MAPS_API_KEY') }}"></script>
 
