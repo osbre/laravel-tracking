@@ -84,13 +84,11 @@ class Track extends Model
 
                 if ($check) {
 
-                    foreach ($request->photos as $photo) {
-                        $filename = $photo->store('public/photos');
+                    $filename = $file->store('public/photos');
 
-                        $this->photos()->create([
-                            'filename' => $filename
-                        ]);
-                    }
+                    $this->photos()->create([
+                        'filename' => $filename
+                    ]);
                 }
             }
         }
