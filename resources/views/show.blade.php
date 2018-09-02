@@ -66,7 +66,7 @@
                         <br><b>{{ $track->at_origin_date->format('m-d-Y H:i') }}</b>
                     </li>
                 @endif
-                @if(!empty($track->locations->where('type', 'freight_loaded')))
+                @if($track->locations->where('type', 'freight_loaded')->isNotEmpty())
                     <li class="list-group-item">
                         Freight loaded:
                         @foreach($track->locations->where('type', 'freight_loaded') as $location)
@@ -85,7 +85,7 @@
 
                     </li>
                 @endif
-                @if(!empty($track->locations->where('type', 'destination')))
+                @if($track->locations->where('type', 'destination')->isNotEmpty())
                     <li class="list-group-item">
                         At destination:
                         @foreach($track->locations->where('type', 'destination') as $location)
