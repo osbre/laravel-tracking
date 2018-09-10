@@ -97,12 +97,12 @@ class TrackController extends Controller
         $end['lat'] = $api->routes[0]->legs[0]->end_location->lat;
         $end['lng'] = $api->routes[0]->legs[0]->end_location->lng;
 
-        $distance['text'] = (float)$api->routes[0]->legs[0]->distance->text;
+        $distance['text'] = (float)str_replace(',', '', $api->routes[0]->legs[0]->distance->text);
         $duration['text'] = $api->routes[0]->legs[0]->duration->text;
         $duration['value'] = $api->routes[0]->legs[0]->duration->value;
 
         $minutes = $distance['text'] / 45 * 60;
-        $time_left = date('H:i', mktime(0, $minutes));
+        $time_left = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
 
         return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_left' => $time_left, 'distance' => $distance, 'duration' => $duration]);
     }

@@ -92,4 +92,21 @@ class Track extends Model
             }
         }
     }
+
+    /**
+     * Convert minutes to time
+     * @param $time
+     * @param string $format
+     * @return string|void
+     */
+    static function convertToHoursMins($time, $format = '%02d:%02d')
+    {
+        if ($time < 1) {
+            return;
+        }
+        $hours = floor($time / 60);
+        $days = floor($hours / 24);
+        $minutes = ($time % 60);
+        return sprintf($format, $days, $hours, $minutes);
+    }
 }
