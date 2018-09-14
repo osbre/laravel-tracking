@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Location;
 use App\Track;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TrackController extends Controller
@@ -97,7 +98,7 @@ class TrackController extends Controller
 
         $minutes = $distance['text'] / 45 * 60;
         $time_to_arrival = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
-        $estimated_time_to_delivery = Track::convertToHoursMins($minutes, '%02d:%02d:%02d');
+        $estimated_time_to_delivery = Carbon::now()->addMinutes($minutes)->format('m-d-Y H:i');
 
         return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'estimated_time_to_delivery' => $estimated_time_to_delivery, 'distance' => $distance, 'duration' => $duration]);
     }
