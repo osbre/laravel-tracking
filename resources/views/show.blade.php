@@ -103,7 +103,6 @@
                 <li class="list-group-item">
                     Estimated time to delivery:<br> <b>{{ $estimated_time_to_delivery }}</b>
                 </li>
-                $estimated_time_to_delivery
 
                 @if(!empty($track->delivered))
                     <li class="list-group-item">
