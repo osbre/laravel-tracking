@@ -62,8 +62,8 @@
                 @if(!empty($track->at_origin))
                     <li class="list-group-item">
                         At origin:
-                        <br><b c>{{ $track->at_origin }}</b>
-                        <br><b>{{ $track->at_origin_date->format('m-d-Y H:i') }}</b>
+                        <br><b>{{ $track->at_origin }}</b>
+                        <br><b>{{ $track->at_origin_date ? $track->at_origin_date->format('m-d-Y H:i') : '' }}</b>
                     </li>
                 @endif
                 @if($track->locations->where('type', 'freight_loaded')->isNotEmpty())
