@@ -100,11 +100,11 @@
                 <li class="list-group-item">
                     Time to arrival:<br> <b>{{ $time_to_arrival }}</b>
                 </li>
-                @if(!empty($time_left))
-                    <li class="list-group-item">
-                        Time from current location:<br> <b>{{ $time_left }}</b>
-                    </li>
-                @endif
+                <li class="list-group-item">
+                    Estimated time to delivery:<br> <b>{{ $estimated_time_to_delivery }}</b>
+                </li>
+                $estimated_time_to_delivery
+
                 @if(!empty($track->delivered))
                     <li class="list-group-item">
                         Delivered:

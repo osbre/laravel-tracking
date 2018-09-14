@@ -97,14 +97,9 @@ class TrackController extends Controller
 
         $minutes = $distance['text'] / 45 * 60;
         $time_to_arrival = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
+        $estimated_time_to_delivery = Track::convertToHoursMins($minutes, '%02d:%02d:%02d');
 
-
-        $api = Track::calcDirections($track->current_location, $track->to);
-        $distance['text'] = (float)str_replace(',', '', $api->routes[0]->legs[0]->distance->text);
-        $minutes = $distance['text'] / 45 * 60;
-        $time_left = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
-
-        return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'time_left' => $time_left, 'distance' => $distance, 'duration' => $duration]);
+        return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'estimated_time_to_delivery' => $estimated_time_to_delivery, 'distance' => $distance, 'duration' => $duration]);
     }
 
 
