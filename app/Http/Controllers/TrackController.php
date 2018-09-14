@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Location;
 use App\Track;
 use Illuminate\Http\Request;
 
@@ -82,14 +83,7 @@ class TrackController extends Controller
     {
         $track = Track::where('code', $request->code)->firstOrFail();
 
-        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from_value . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-
-        $api = json_decode($output);
+        $api = Track::calcDirections($track->from_value, $track->to);
 
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;
@@ -102,9 +96,15 @@ class TrackController extends Controller
         $duration['value'] = $api->routes[0]->legs[0]->duration->value;
 
         $minutes = $distance['text'] / 45 * 60;
+        $time_to_arrival = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
+
+
+        $api = Track::calcDirections($track->current_location, $track->to);
+        $distance['text'] = (float)str_replace(',', '', $api->routes[0]->legs[0]->distance->text);
+        $minutes = $distance['text'] / 45 * 60;
         $time_left = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
 
-        return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_left' => $time_left, 'distance' => $distance, 'duration' => $duration]);
+        return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'time_left' => $time_left, 'distance' => $distance, 'duration' => $duration]);
     }
 
 
@@ -116,14 +116,7 @@ class TrackController extends Controller
      */
     public function edit(Track $track)
     {
-        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $track->from_value . "&destination=" . $track->to . "&key=" . env('GOOGLE_MAPS_API_KEY');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-
-        $api = json_decode($output);
+        $api = Track::calcDirections($track->from_value, $track->to);
 
         $start['lat'] = $api->routes[0]->legs[0]->start_location->lat;
         $start['lng'] = $api->routes[0]->legs[0]->start_location->lng;

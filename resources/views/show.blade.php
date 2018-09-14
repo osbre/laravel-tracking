@@ -98,9 +98,13 @@
                 @endif
 
                 <li class="list-group-item">
-                    Time to arrival:<br> <b>{{ $time_left }}</b>
+                    Time to arrival:<br> <b>{{ $time_to_arrival }}</b>
                 </li>
-
+                @if(!empty($time_left))
+                    <li class="list-group-item">
+                        Time from current location:<br> <b>{{ $time_left }}</b>
+                    </li>
+                @endif
                 @if(!empty($track->delivered))
                     <li class="list-group-item">
                         Delivered:
