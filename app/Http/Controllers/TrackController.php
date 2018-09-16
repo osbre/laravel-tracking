@@ -97,8 +97,12 @@ class TrackController extends Controller
         $duration['value'] = $api->routes[0]->legs[0]->duration->value;
 
         $minutes = $distance['text'] / 45 * 60;
-        $time_to_arrival = Track::convertToHoursMins($minutes, '%02d days %02d hours %02d minutes');
-        $estimated_time_to_delivery = Carbon::now()->addMinutes($minutes)->format('m-d-Y H:i');
+        $time_to_arrival = Track::convertToHoursMins($minutes);
+        $estimated_time_to_delivery = Carbon::now()
+            ->addDay($time_to_arrival['days'])
+            ->addHour($time_to_arrival['hours'])
+            ->addMinute($time_to_arrival['minutes'])
+            ->format('m-d-Y H:i');
 
         return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'estimated_time_to_delivery' => $estimated_time_to_delivery, 'distance' => $distance, 'duration' => $duration]);
     }

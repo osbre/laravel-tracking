@@ -82,7 +82,6 @@
                         Current location:
                         <br><b>{{ $track->current_location }}</b>
                         <br><b>{{ $track->current_location_date ? $track->current_location_date->format('m-d-Y H:i') : '' }}</b>
-
                     </li>
                 @endif
                 @if($track->locations->where('type', 'destination')->isNotEmpty())
@@ -98,7 +97,8 @@
                 @endif
 
                 <li class="list-group-item">
-                    Time to arrival:<br> <b>{{ $time_to_arrival }}</b>
+                    Time to arrival:<br>
+                    <b>{{ $time_to_arrival['days'].' days '.$time_to_arrival['hours'].' hours '.$time_to_arrival['minutes'].' minutes' }}</b>
                 </li>
                 <li class="list-group-item">
                     Estimated time to delivery:<br> <b>{{ $estimated_time_to_delivery }}</b>
