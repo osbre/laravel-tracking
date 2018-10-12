@@ -69,8 +69,8 @@
                                 </a>
                                 <form action="{{route('tracks.destroy',$track->id)}}" method="post"
                                       id='destroy_form{{$loop->iteration}}'>
-                                    {{csrf_field()}}
-                                    <input name="_method" type="hidden" value="DELETE">
+                                    @csrf
+                                    @method('delete')
                                 </form>
                             </div>
                         </td>
