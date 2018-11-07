@@ -4,8 +4,11 @@
 
 It use google maps api, to get distance and time for some track.
 
-## What a this? (screenshots)
-<img src="screenshot.png">
+## What a this? (screenshots, demo)
+http://track.ostap34.pp.ua
+http://track.ostap34.pp.ua/login (user - admin@noreply.com, password - 12345678)
+
+![app screenshot1](screenshot.png)
 
 ![app screenshot1](screenshot1.png)
 
@@ -64,5 +67,4 @@ php artisan serve
 Then go to `http://localhost:8000` from your browser and see the app.
 
 # Todo 
-- Add demo
 - Update screenshots
