@@ -3943,9 +3943,9 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pickerjs@^1.0.0-beta:
-  version "1.0.0-beta"
-  resolved "https://registry.yarnpkg.com/pickerjs/-/pickerjs-1.0.0-beta.tgz#6a5ee3cdd789acc3fb2460e324bf608eb8859d56"
+pickerjs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/pickerjs/-/pickerjs-1.2.0.tgz#2002682eee26973c1f353e3de7605ad364213e23"
 
 pify@^2.0.0:
   version "2.3.0"

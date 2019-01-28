@@ -21,6 +21,6 @@
     "dependencies": {
         "bootstrap.native": "https://github.com/thednp/bootstrap.native",
         "flatpickr": "^4.5.1",
-        "pickerjs": "^1.0.0-beta"
+        "pickerjs": "^1.2.0"
     }
 }
