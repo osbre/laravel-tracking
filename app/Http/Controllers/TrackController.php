@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Location;
 use App\Track;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,13 +33,13 @@ class TrackController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $track = Track::create($request->all());
-
 
         $locations = collect();
 
@@ -48,8 +47,8 @@ class TrackController extends Controller
             if (!empty($freight_load)) {
                 $locations->push([
                     'value' => $freight_load,
-                    'type' => 'freight_loaded',
-                    'date' => $request->freight_loaded_dates[$key]
+                    'type'  => 'freight_loaded',
+                    'date'  => $request->freight_loaded_dates[$key],
                 ]);
             }
         }
@@ -58,12 +57,11 @@ class TrackController extends Controller
             if (!empty($destination)) {
                 $locations->push([
                     'value' => $destination,
-                    'type' => 'destination',
-                    'date' => $request->destination_dates[$key]
+                    'type'  => 'destination',
+                    'date'  => $request->destination_dates[$key],
                 ]);
             }
         }
-
 
         if ($locations->isNotEmpty()) {
             $track->locations()->createMany($locations->toArray());
@@ -77,7 +75,8 @@ class TrackController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -92,7 +91,7 @@ class TrackController extends Controller
         $end['lat'] = $api->routes[0]->legs[0]->end_location->lat;
         $end['lng'] = $api->routes[0]->legs[0]->end_location->lng;
 
-        $distance['text'] = (float)str_replace(',', '', $api->routes[0]->legs[0]->distance->text);
+        $distance['text'] = (float) str_replace(',', '', $api->routes[0]->legs[0]->distance->text);
         $duration['text'] = $api->routes[0]->legs[0]->duration->text;
         $duration['value'] = $api->routes[0]->legs[0]->duration->value;
 
@@ -107,11 +106,11 @@ class TrackController extends Controller
         return view('show', ['track' => $track, 'start' => $start, 'end' => $end, 'time_to_arrival' => $time_to_arrival, 'estimated_time_to_delivery' => $estimated_time_to_delivery, 'distance' => $distance, 'duration' => $duration]);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Track $track
+     * @param \App\Track $track
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Track $track)
@@ -132,8 +131,9 @@ class TrackController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Track $track
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Track               $track
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Track $track)
@@ -146,8 +146,8 @@ class TrackController extends Controller
             foreach ($request->freight_loads as $key => $freight_load) {
                 $locations->push([
                     'value' => $freight_load,
-                    'type' => 'freight_loaded',
-                    'date' => $request->freight_loaded_dates[$key]
+                    'type'  => 'freight_loaded',
+                    'date'  => $request->freight_loaded_dates[$key],
                 ]);
             }
         }
@@ -155,8 +155,8 @@ class TrackController extends Controller
             foreach ($request->destinations as $key => $destination) {
                 $locations->push([
                     'value' => $destination,
-                    'type' => 'destination',
-                    'date' => $request->destination_dates[$key]
+                    'type'  => 'destination',
+                    'date'  => $request->destination_dates[$key],
                 ]);
             }
         }
@@ -186,7 +186,8 @@ class TrackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Track $track
+     * @param \App\Track $track
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Track $track)
@@ -194,6 +195,7 @@ class TrackController extends Controller
         $track->locations()->delete();
         $track->photos()->delete();
         $track->delete();
+
         return redirect()->route('tracks.index');
     }
 }

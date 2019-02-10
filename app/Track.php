@@ -33,13 +33,15 @@ class Track extends Model
     }
 
     /**
-     * Check, is now user must update track (user must update track every two hours)
-     * @return boolean
+     * Check, is now user must update track (user must update track every two hours).
+     *
+     * @return bool
      */
     public function getIsUpdateExpiredAttribute()
     {
         $date = $this->updated_at->addHour(2);
         $now = Carbon::now();
+
         return $date->lessThan($now);
     }
 
@@ -86,7 +88,7 @@ class Track extends Model
                     $filename = $file->store('public/photos');
 
                     $this->photos()->create([
-                        'filename' => $filename
+                        'filename' => $filename,
                     ]);
                 }
             }
@@ -94,11 +96,13 @@ class Track extends Model
     }
 
     /**
-     * Convert minutes to time
-     * @param integer $time
+     * Convert minutes to time.
+     *
+     * @param int $time
+     *
      * @return array $value
      */
-    static function convertToHoursMins($time)
+    public static function convertToHoursMins($time)
     {
         if ($time < 1) {
             return;
@@ -106,12 +110,13 @@ class Track extends Model
         $value['hours'] = floor($time / 60);
         $value['days'] = floor($value['hours'] / 24);
         $value['minutes'] = ($time % 60);
+
         return $value;
     }
 
-    static function calcDirections($from, $to)
+    public static function calcDirections($from, $to)
     {
-        $link = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $from . "&destination=" . $to . "&key=" . env('GOOGLE_MAPS_API_KEY');
+        $link = 'https://maps.googleapis.com/maps/api/directions/json?origin='.$from.'&destination='.$to.'&key='.env('GOOGLE_MAPS_API_KEY');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $link));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
