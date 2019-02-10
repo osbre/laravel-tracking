@@ -12,13 +12,12 @@ class Photo extends Model
 
     protected $touches = ['track'];
 
-    const UPDATED_AT = null;//disable updated_at field
+    const UPDATED_AT = null; //disable updated_at field
 
     public function track()
     {
         return $this->belongsTo('App\Track');
     }
-
 
     /*
       TODO - with photo, too delete file
@@ -27,5 +26,4 @@ class Photo extends Model
         Storage::delete($this->filename);
         parent::delete();
     }*/
-
 }

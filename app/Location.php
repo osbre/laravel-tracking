@@ -11,7 +11,7 @@ class Location extends Model
 
     public $dates = ['date'];
 
-    const UPDATED_AT = null;//disable updated_at field
+    const UPDATED_AT = null; //disable updated_at field
 
     protected $touches = ['track'];
 
