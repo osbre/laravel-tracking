@@ -67,4 +67,6 @@ php artisan serve
 Then go to `http://localhost:8000` from your browser and see the app.
 
 # Todo 
+- Refactor some parts (remove logic from controllers, etc)
+- Update deps
 - Update screenshots
